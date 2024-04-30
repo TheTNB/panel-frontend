@@ -6,16 +6,25 @@ import { generateRandomString, isNullOrUndef, renderIcon } from '@/utils'
 import type { Backup, Website } from './types'
 import type { UploadFileInfo, MessageReactive } from 'naive-ui'
 import Editor from '@guolao/vue-monaco-editor'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 let messageReactive: MessageReactive | null = null
 const selectedRowKeys = ref<any>([])
 
+const { t } = useI18n()
+
 const columns: any = [
   { type: 'selection', fixed: 'left' },
-  { title: '网站名', key: 'name', width: 150, resizable: true, ellipsis: { tooltip: true } },
   {
-    title: '运行',
+    title: t('routes.websiteIndex.columns.name'),
+    key: 'name',
+    width: 150,
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: t('routes.websiteIndex.columns.status'),
     key: 'status',
     width: 60,
     align: 'center',
@@ -28,7 +37,13 @@ const columns: any = [
       })
     }
   },
-  { title: '目录', key: 'path', width: 200, resizable: true, ellipsis: { tooltip: true } },
+  {
+    title: t('routes.websiteIndex.columns.path'),
+    key: 'path',
+    width: 200,
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
   {
     title: 'PHP',
     key: 'php',
@@ -53,7 +68,7 @@ const columns: any = [
     }
   },
   {
-    title: '备注',
+    title: t('routes.websiteIndex.columns.remark'),
     key: 'remark',
     width: 200,
     resizable: true,
@@ -70,7 +85,7 @@ const columns: any = [
     }
   },
   {
-    title: '操作',
+    title: t('routes.websiteIndex.columns.actions'),
     key: 'actions',
     width: 240,
     align: 'center',
@@ -469,14 +484,18 @@ onMounted(() => {
     <n-space vertical size="large">
       <n-card rounded-10>
         <n-space>
-          <n-button type="primary" @click="addModal = true"> 新建网站 </n-button>
+          <n-button type="primary" @click="addModal = true">
+            {{ $t('routes.websiteIndex.create.trigger') }}
+          </n-button>
           <n-popconfirm @positive-click="batchDelete">
             <template #trigger>
               <n-button type="error"> 批量删除 </n-button>
             </template>
             高危操作！确定删除选中的网站吗？
           </n-popconfirm>
-          <n-button type="warning" @click="editDefaultPageModal = true">修改默认页</n-button>
+          <n-button type="warning" @click="editDefaultPageModal = true">
+            {{ $t('routes.websiteIndex.edit.trigger') }}
+          </n-button>
         </n-space>
       </n-card>
       <n-data-table
@@ -496,7 +515,7 @@ onMounted(() => {
   </CommonPage>
   <n-modal
     v-model:show="addModal"
-    title="新建网站"
+    :title="$t('routes.websiteIndex.create.title')"
     preset="card"
     style="width: 60vw"
     size="huge"
@@ -505,17 +524,17 @@ onMounted(() => {
     @close="addModal = false"
   >
     <n-form :model="addModel">
-      <n-form-item path="name" label="网站名">
+      <n-form-item path="name" :label="$t('routes.websiteIndex.create.fields.name.label')">
         <n-input
           v-model:value="addModel.name"
           type="text"
           @keydown.enter.prevent
-          placeholder="网站名建议使用英文，设置后不可修改"
+          :placeholder="$t('routes.websiteIndex.create.fields.name.placeholder')"
         />
       </n-form-item>
       <n-row :gutter="[0, 24]">
         <n-col :span="11">
-          <n-form-item label="域名">
+          <n-form-item :label="$t('routes.websiteIndex.create.fields.domains.label')">
             <n-dynamic-input
               v-model:value="addModel.domains"
               placeholder="example.com"
@@ -526,7 +545,7 @@ onMounted(() => {
         </n-col>
         <n-col :span="2"></n-col>
         <n-col :span="11">
-          <n-form-item label="端口">
+          <n-form-item :label="$t('routes.websiteIndex.create.fields.port.label')">
             <n-dynamic-input
               v-model:value="addModel.ports"
               placeholder="80"
@@ -538,11 +557,11 @@ onMounted(() => {
       </n-row>
       <n-row :gutter="[0, 24]">
         <n-col :span="11">
-          <n-form-item path="php" label="PHP版本">
+          <n-form-item path="php" :label="$t('routes.websiteIndex.create.fields.phpVersion.label')">
             <n-select
               v-model:value="addModel.php"
               :options="installedDbAndPhp.php"
-              placeholder="选择PHP版本"
+              :placeholder="$t('routes.websiteIndex.create.fields.phpVersion.placeholder')"
               @keydown.enter.prevent
             >
             </n-select>
@@ -550,11 +569,11 @@ onMounted(() => {
         </n-col>
         <n-col :span="2"></n-col>
         <n-col :span="11">
-          <n-form-item path="db" label="数据库">
+          <n-form-item path="db" :label="$t('routes.websiteIndex.create.fields.db.label')">
             <n-select
               v-model:value="addModel.db_type"
               :options="installedDbAndPhp.db"
-              placeholder="选择数据库"
+              :placeholder="$t('routes.websiteIndex.create.fields.db.placeholder')"
               @keydown.enter.prevent
               @update:value="
                 () => {
@@ -571,52 +590,64 @@ onMounted(() => {
       </n-row>
       <n-row :gutter="[0, 24]">
         <n-col :span="7">
-          <n-form-item v-if="addModel.db" path="db_name" label="数据库名">
+          <n-form-item
+            v-if="addModel.db"
+            path="db_name"
+            :label="$t('routes.websiteIndex.create.fields.dbName.label')"
+          >
             <n-input
               v-model:value="addModel.db_name"
               type="text"
               @keydown.enter.prevent
-              placeholder="数据库名"
+              :placeholder="$t('routes.websiteIndex.create.fields.dbName.placeholder')"
             />
           </n-form-item>
         </n-col>
         <n-col :span="1"></n-col>
         <n-col :span="7">
-          <n-form-item v-if="addModel.db" path="db_user" label="数据库用户名">
+          <n-form-item
+            v-if="addModel.db"
+            path="db_user"
+            :label="$t('routes.websiteIndex.create.fields.dbUser.label')"
+          >
             <n-input
               v-model:value="addModel.db_user"
               type="text"
               @keydown.enter.prevent
-              placeholder="数据库用户名"
+              :placeholder="$t('routes.websiteIndex.create.fields.dbUser.placeholder')"
             />
           </n-form-item>
         </n-col>
         <n-col :span="1"></n-col>
         <n-col :span="8">
-          <n-form-item v-if="addModel.db" path="db_password" label="数据库密码">
+          <n-form-item
+            v-if="addModel.db"
+            path="db_password"
+            :label="$t('routes.websiteIndex.create.fields.dbPassword.label')"
+          >
             <n-input
               v-model:value="addModel.db_password"
               type="text"
               @keydown.enter.prevent
-              placeholder="数据库密码"
+              :placeholder="$t('routes.websiteIndex.create.fields.dbPassword.placeholder')"
             />
           </n-form-item>
         </n-col>
       </n-row>
-      <n-form-item path="path" label="目录">
+      <n-form-item path="path" :label="$t('routes.websiteIndex.create.fields.path.label')">
         <n-input
           v-model:value="addModel.path"
           type="text"
           @keydown.enter.prevent
-          placeholder="网站根目录（不填默认为建站目录/网站名）"
+          :placeholder="$t('routes.websiteIndex.create.fields.path.placeholder')"
         />
       </n-form-item>
-      <n-form-item path="remark" label="备注">
+      <n-form-item path="remark" :label="$t('routes.websiteIndex.create.fields.remark.label')">
         <n-input
           v-model:value="addModel.remark"
           type="textarea"
           @keydown.enter.prevent
-          placeholder="备注"
+          :placeholder="$t('routes.websiteIndex.create.fields.remark.placeholder')"
         />
       </n-form-item>
     </n-form>
@@ -629,7 +660,7 @@ onMounted(() => {
           :disabled="buttonDisabled"
           @click="handleAdd"
         >
-          提交
+          {{ $t('routes.websiteIndex.create.actions.submit') }}
         </n-button>
       </n-col>
     </n-row>

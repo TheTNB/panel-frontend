@@ -5,6 +5,7 @@ import FullScreen from './components/FullScreen.vue'
 import UserAvatar from './components/UserAvatar.vue'
 import ThemeMode from './components/ThemeMode.vue'
 import ReloadPage from '@/layout/header/components/ReloadPage.vue'
+import LocaleChanger from '@/layout/header/components/LocaleChanger.vue'
 </script>
 
 <template>
@@ -15,6 +16,7 @@ import ReloadPage from '@/layout/header/components/ReloadPage.vue'
   <div ml-auto flex items-center>
     <ReloadPage />
     <ThemeMode />
+    <LocaleChanger />
     <FullScreen />
     <UserAvatar />
   </div>

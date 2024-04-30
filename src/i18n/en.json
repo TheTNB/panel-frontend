@@ -1,0 +1,97 @@
+{
+  "routes": {
+    "certIndex": {
+      "title": "Certificate"
+    },
+    "containerIndex": {
+      "title": "Container Management"
+    },
+    "cronIndex": {
+      "title": "Scheduled Tasks"
+    },
+    "fileIndex": {
+      "title": "File Management"
+    },
+    "homeIndex": {
+      "title": "Dashboard"
+    },
+    "monitorIndex": {
+      "title": "System Monitoring"
+    },
+    "pluginIndex": {
+      "title": "Software Plugins"
+    },
+    "safeIndex": {
+      "title": "System Security"
+    },
+    "settingIndex": {
+      "title": "Panel settings"
+    },
+    "sshIndex": {
+      "title": "SSH terminal"
+    },
+    "taskIndex": {
+      "title": "Task Center"
+    },
+    "websiteIndex": {
+      "title": "Website Management",
+      "columns": {
+        "name": "Website Name",
+        "status": "Status",
+        "path": "Path",
+        "remark": "Remark",
+        "actions": "Actions"
+      },
+      "create": {
+        "trigger": "add website",
+        "title": "Create a new website",
+        "fields": {
+          "name": {
+            "label": "Website Name",
+            "placeholder": "Please use English for the website name. Once set, it cannot be changed."
+          },
+           "domains": {
+              "label": "Domains"
+           },
+          "port": {
+            "label": "Port"
+          },
+          "phpVersion": {
+            "label": "PHP Version",
+            "placeholder": "Select PHP version"
+          },
+          "db": {
+            "label": "Database",
+            "placeholder": "Select database"
+          },
+          "dbName": {
+            "label": "Database Name",
+            "placeholder": "Please enter the database name"
+          },
+            "dbUser": {
+                "label": "Database User",
+                "placeholder": "Please enter the database user"
+            },
+            "dbPassword": {
+                "label": "Database Password",
+                "placeholder": "Please enter the database password"
+            },
+          "path": {
+            "label": "Directory",
+            "placeholder": "Website root directory (leave blank for default site directory/site name)"
+          },
+          "remark": {
+            "label": "Remark",
+            "placeholder": "Please enter a remark"
+          }
+        },
+        "actions": {
+          "submit": "Submit"
+        }
+      },
+      "edit": {
+        "trigger": "edit default page"
+      }
+    }
+  }
+}

@@ -15,7 +15,7 @@ export default {
       path: '',
       component: () => import('./IndexView.vue'),
       meta: {
-        title: '计划任务',
+        title: 'routes.cronIndex.title',
         icon: 'mdi:clock-outline',
         role: ['admin'],
         requireAuth: true

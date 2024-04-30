@@ -15,7 +15,7 @@ export default {
       path: '',
       component: () => import('./IndexView.vue'),
       meta: {
-        title: '网站管理',
+        title: 'routes.websiteIndex.title',
         icon: 'mdi:web',
         role: ['admin'],
         requireAuth: true

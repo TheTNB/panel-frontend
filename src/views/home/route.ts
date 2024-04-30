@@ -16,7 +16,7 @@ export default {
       path: 'home',
       component: () => import('./IndexView.vue'),
       meta: {
-        title: '仪表盘',
+        title: 'routes.homeIndex.title',
         icon: 'mdi:monitor-dashboard',
         role: ['admin'],
         requireAuth: true

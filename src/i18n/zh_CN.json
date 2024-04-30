@@ -1,0 +1,97 @@
+{
+  "routes": {
+    "certIndex": {
+      "title": "签发证书"
+    },
+    "containerIndex": {
+      "title": "容器管理"
+    },
+    "cronIndex": {
+      "title": "定时任务"
+    },
+    "fileIndex": {
+      "title": "文件管理"
+    },
+    "homeIndex": {
+      "title": "仪表盘"
+    },
+    "monitorIndex": {
+      "title": "资源监控"
+    },
+    "pluginIndex": {
+      "title": "软件插件"
+    },
+    "safeIndex": {
+      "title": "系统安全"
+    },
+    "settingIndex": {
+      "title": "面板设置"
+    },
+    "sshIndex": {
+      "title": "SSH终端"
+    },
+    "taskIndex": {
+      "title": "任务中心"
+    },
+    "websiteIndex": {
+      "title": "网站管理",
+      "columns": {
+        "name": "网站名",
+        "status": "运行",
+        "path": "目录",
+        "remark": "备注",
+        "actions": "操作"
+      },
+      "create": {
+        "trigger": "新建网站",
+        "title": "新建网站",
+        "fields": {
+          "name": {
+            "label": "网站名",
+            "placeholder": "网站名建议使用英文，设置后不可修改"
+          },
+          "domains": {
+            "label": "域名"
+          },
+          "port": {
+            "label": "端口"
+          },
+          "phpVersion": {
+            "label": "PHP版本",
+            "placeholder": "选择PHP版本"
+          },
+          "db": {
+            "label": "数据库",
+            "placeholder": "选择数据库"
+          },
+          "dbName": {
+            "label": "数据库名",
+            "placeholder": "数据库名"
+          },
+            "dbUser": {
+                "label": "数据库用户",
+                "placeholder": "数据库用户"
+            },
+            "dbPassword": {
+                "label": "数据库密码",
+                "placeholder": "数据库密码"
+            },
+            "path": {
+                "label": "目录",
+                "placeholder": "网站根目录（不填默认为建站目录/网站名）"
+            },
+          "remark": {
+            "label": "备注",
+            "placeholder": "备注"
+          }
+        },
+        "actions": {
+          "submit": "创建"
+        }
+      },
+      "edit": {
+        "trigger": "修改默认页"
+      }
+    }
+  }
+}

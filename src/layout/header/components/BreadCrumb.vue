@@ -49,12 +49,12 @@ function getIcon(meta?: Meta, size = 16) {
         >
           <span class="link-text">
             <component :is="routeItem.icon" v-if="routeItem.icon" />
-            {{ routeItem.meta.title }}
+            {{ $t(routeItem.meta.title) }}
           </span>
         </n-dropdown>
         <span v-else class="link-text">
           <component :is="routeItem.icon" v-if="routeItem.icon" />
-          {{ routeItem.meta.title }}
+          {{ $t(routeItem.meta.title) }}
         </span>
       </n-breadcrumb-item>
     </template>
