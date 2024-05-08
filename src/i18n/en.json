@@ -25,7 +25,50 @@
       "title": "System Security"
     },
     "settingIndex": {
-      "title": "Panel settings"
+      "title": "Panel settings",
+      "info": "Update panel settings / SSL / entry, adjust browser address accordingly to access panel!",
+      "edit": {
+        "fields": {
+          "name": {
+            "label": "Panel name",
+            "placeholder": "耗子 Linux 面板"
+          },
+          "username": {
+            "label": "Username",
+            "placeholder": "admin"
+          },
+          "password": {
+            "label": "Password",
+            "placeholder": "admin"
+          },
+          "email": {
+            "label": "Email (may be useful later)",
+            "placeholder": "admin@example.com"
+          },
+          "port": {
+            "label": "Port (After saving, restart the panel and modify the browser address bar's port to the new port to access the panel)",
+            "placeholder": "8888"
+          },
+          "entrance": {
+            "label": "Security entrance (after saving, you need to restart the panel and modify the entrance in the browser address bar to a new entrance to access the panel)",
+            "placeholder": "admin"
+          },
+          "ssl": {
+            "label": "Panel SSL"
+          },
+          "path": {
+            "label": "Default website directory",
+            "placeholder": "/www/wwwroot"
+          },
+          "backup": {
+            "label": "Default backup directory",
+            "placeholder": "/www/backup"
+          }
+        },
+        "actions": {
+          "submit": "save"
+        }
+      }
     },
     "sshIndex": {
       "title": "SSH terminal"

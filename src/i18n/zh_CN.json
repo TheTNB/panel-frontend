@@ -25,7 +25,53 @@
       "title": "系统安全"
     },
     "settingIndex": {
-      "title": "面板设置"
+      "title": "面板设置",
+      "info": "修改面板端口 / SSL / 入口后，需要在浏览器地址栏做相应修改方可打开面板！",
+      "edit": {
+        "toasts": {
+          "success": "保存成功"
+        },
+        "fields": {
+          "name": {
+            "label": "面板名称",
+            "placeholder": "耗子 Linux 面板"
+          },
+          "username": {
+            "label": "用户名",
+            "placeholder": "admin"
+          },
+          "password": {
+            "label": "密码",
+            "placeholder": "admin"
+          },
+          "email": {
+            "label": "邮箱（以后可能会有用",
+            "placeholder": "admin@example.com"
+          },
+          "port": {
+            "label": "端口（保存后需要重启面板并修改浏览器地址栏的端口为新端口以访问面板)",
+            "placeholder": "8888"
+          },
+          "entrance": {
+            "label": "安全入口（保存后需要重启面板并修改浏览器地址栏的入口为新入口以访问面板)",
+            "placeholder": "admin"
+          },
+          "ssl": {
+            "label": "面板 SSL"
+          },
+          "path": {
+            "label": "默认建站目录",
+            "placeholder": "/www/wwwroot"
+          },
+          "backup": {
+            "label": "默认备份目录",
+            "placeholder": "/www/backup"
+          }
+        },
+        "actions": {
+          "submit": "保存"
+        }
+      }
     },
     "sshIndex": {
       "title": "SSH终端"
