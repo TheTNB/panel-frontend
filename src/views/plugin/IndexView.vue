@@ -4,15 +4,39 @@ import { NButton, NDataTable, NPopconfirm, NSwitch } from 'naive-ui'
 import plugin from '@/api/panel/plugin'
 import { renderIcon } from '@/utils'
 import { router } from '@/router'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const columns: any = [
   { type: 'selection', fixed: 'left' },
-  { title: '插件名', key: 'name', width: 150, resizable: true, ellipsis: { tooltip: true } },
-  { title: '描述', key: 'description', resizable: true, ellipsis: { tooltip: true } },
-  { title: '已装版本', key: 'installed_version', width: 100, ellipsis: { tooltip: true } },
-  { title: '最新版本', key: 'version', width: 100, ellipsis: { tooltip: true } },
   {
-    title: '首页显示',
+    title: t('routes.pluginIndex.columns.name'),
+    key: 'name',
+    width: 150,
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: t('routes.pluginIndex.columns.description'),
+    key: 'description',
+    resizable: true,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: t('routes.pluginIndex.columns.installedVersion'),
+    key: 'installed_version',
+    width: 100,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: t('routes.pluginIndex.columns.version'),
+    key: 'version',
+    width: 100,
+    ellipsis: { tooltip: true }
+  },
+  {
+    title: t('routes.pluginIndex.columns.show'),
     key: 'show',
     width: 100,
     align: 'center',
@@ -26,7 +50,7 @@ const columns: any = [
     }
   },
   {
-    title: '操作',
+    title: t('routes.pluginIndex.columns.actions'),
     key: 'actions',
     width: 280,
     align: 'center',
@@ -42,7 +66,7 @@ const columns: any = [
               },
               {
                 default: () => {
-                  return '升级 ' + row.name + ' 插件可能会重置相关配置到默认状态，确定继续吗？'
+                  return t('routes.pluginIndex.confirm.update', { plugin: row.name })
                 },
                 trigger: () => {
                   return h(
@@ -52,7 +76,7 @@ const columns: any = [
                       type: 'warning'
                     },
                     {
-                      default: () => '升级',
+                      default: () => t('routes.pluginIndex.buttons.update'),
                       icon: renderIcon('material-symbols:arrow-circle-up-outline-rounded', {
                         size: 14
                       })
@@ -71,7 +95,7 @@ const columns: any = [
                 onClick: () => handleManage(row.slug)
               },
               {
-                default: () => '管理',
+                default: () => t('routes.pluginIndex.buttons.manage'),
                 icon: renderIcon('material-symbols:settings-outline', { size: 14 })
               }
             )
@@ -84,7 +108,7 @@ const columns: any = [
               },
               {
                 default: () => {
-                  return '确定卸载插件 ' + row.name + ' 吗？'
+                  return t('routes.pluginIndex.confirm.uninstall', { plugin: row.name })
                 },
                 trigger: () => {
                   return h(
@@ -95,7 +119,7 @@ const columns: any = [
                       style: 'margin-left: 15px;'
                     },
                     {
-                      default: () => '卸载',
+                      default: () => t('routes.pluginIndex.buttons.uninstall'),
                       icon: renderIcon('material-symbols:delete-outline', { size: 14 })
                     }
                   )
@@ -111,7 +135,7 @@ const columns: any = [
               },
               {
                 default: () => {
-                  return '确定安装插件 ' + row.name + ' 吗？'
+                  return t('routes.pluginIndex.confirm.install', { plugin: row.name })
                 },
                 trigger: () => {
                   return h(
@@ -121,7 +145,7 @@ const columns: any = [
                       type: 'info'
                     },
                     {
-                      default: () => '安装',
+                      default: () => t('routes.pluginIndex.buttons.install'),
                       icon: renderIcon('material-symbols:download-rounded', { size: 14 })
                     }
                   )
@@ -150,26 +174,26 @@ const pagination = reactive({
 
 const handleShowChange = (row: any) => {
   plugin.updateShow(row.slug, !row.show).then(() => {
-    window.$message.success('设置成功')
+    window.$message.success(t('routes.pluginIndex.alerts.setup'))
     row.show = !row.show
   })
 }
 
 const handleInstall = (slug: string) => {
   plugin.install(slug).then(() => {
-    window.$message.success('任务已提交，请稍后查看任务进度')
+    window.$message.success(t('routes.pluginIndex.alerts.install'))
   })
 }
 
 const handleUpdate = (slug: string) => {
   plugin.update(slug).then(() => {
-    window.$message.success('任务已提交，请前往任务中心查看任务进度')
+    window.$message.success(t('routes.pluginIndex.alerts.update'))
   })
 }
 
 const handleUninstall = (slug: string) => {
   plugin.uninstall(slug).then(() => {
-    window.$message.success('任务已提交，请前往任务中心查看任务进度')
+    window.$message.success(t('routes.pluginIndex.alerts.uninstall'))
   })
 }
 
@@ -208,8 +232,8 @@ onMounted(() => {
 <template>
   <CommonPage show-footer>
     <n-space vertical>
-      <n-alert type="info">按钮点击一次即可，请勿重复点击以免重复执行！</n-alert>
-      <n-alert type="warning">升级插件前强烈建议先备份/快照，以免出现问题时无法回滚！</n-alert>
+      <n-alert type="info">{{ $t('routes.pluginIndex.alerts.info') }}</n-alert>
+      <n-alert type="warning">{{ $t('routes.pluginIndex.alerts.warning') }}</n-alert>
       <n-data-table
         striped
         remote

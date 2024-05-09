@@ -19,7 +19,34 @@
       "title": "System Monitoring"
     },
     "pluginIndex": {
-      "title": "Software Plugins"
+      "title": "Software Plugins",
+      "alerts": {
+        "info": "Click the button once, please do not click it repeatedly to avoid repeated execution!",
+        "warning": "It is strongly recommended to take a backup/snapshot before upgrading the plug-in to avoid being unable to roll back if problems arise!",
+        "setup": "Setup successful",
+        "install": "The task has been submitted, please check the task progress later",
+        "update": "The task has been submitted, please go to the task center to check the task progress",
+        "uninstall": "The task has been submitted, please go to the task center to check the task progress"
+      },
+      "buttons": {
+        "install": "Install",
+        "manage": "Manage",
+        "update": "Upgrade",
+        "uninstall": "Uninstall"
+      },
+      "confirm": {
+        "install": "Are you sure you want to install the plugin {plugin}?",
+        "update": "Upgrading the {plugin} plug-in may reset related configurations to the default state. Are you sure you want to continue?",
+        "uninstall": "Are you sure you want to uninstall the plugin {plugin}?"
+      },
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "installedVersion": "Installed Version",
+        "version": "Latest Version",
+        "show": "Homepage Display",
+        "actions": "Actions"
+      }
     },
     "safeIndex": {
       "title": "System Security"
