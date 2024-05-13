@@ -46,10 +46,10 @@ dependencies:
     version: 3.4.27(typescript@5.4.5)
   vue-echarts:
     specifier: ^6.6.9
-    version: 6.7.1(echarts@5.5.0)(vue@3.4.25)
+    version: 6.7.2(echarts@5.5.0)(vue@3.4.27)
   vue-i18n:
     specifier: ^9.13.1
-    version: 9.13.1(vue@3.4.25)
+    version: 9.13.1(vue@3.4.27)
   vue-router:
     specifier: ^4.3.2
     version: 4.3.2(vue@3.4.27)
@@ -4383,7 +4383,7 @@ packages:
       - supports-color
     dev: true
 
-  /vue-i18n@9.13.1(vue@3.4.25):
+  /vue-i18n@9.13.1(vue@3.4.27):
     resolution: {integrity: sha512-mh0GIxx0wPtPlcB1q4k277y0iKgo25xmDPWioVVYanjPufDBpvu5ySTjP5wOrSvlYQ2m1xI+CFhGdauv/61uQg==}
     engines: {node: '>= 16'}
     peerDependencies:
@@ -4392,10 +4392,10 @@ packages:
       '@intlify/core-base': 9.13.1
       '@intlify/shared': 9.13.1
       '@vue/devtools-api': 6.6.1
-      vue: 3.4.25(typescript@5.4.5)
+      vue: 3.4.27(typescript@5.4.5)
     dev: false
 
-  /vue-router@4.3.2(vue@3.4.25):
+  /vue-router@4.3.2(vue@3.4.27):
     resolution: {integrity: sha512-hKQJ1vDAZ5LVkKEnHhmm1f9pMiWIBNGF5AwU67PdH7TyXCj/a4hTccuUuYCAMgJK6rO/NVYtQIEN3yL8CECa7Q==}
     peerDependencies:
       vue: ^3.2.0
