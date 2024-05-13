@@ -29,12 +29,12 @@ const columns: any = [
     ellipsis: { tooltip: true },
     render(row: any) {
       return row.status === 'finished'
-        ? '已完成'
+        ? t('routes.taskIndex.options.status.finished')
         : row.status === 'waiting'
-          ? '等待中'
+          ? t('routes.taskIndex.options.status.waiting')
           : row.status === 'failed'
-            ? '已失败'
-            : '运行中'
+            ? t('routes.taskIndex.options.status.failed')
+            : t('routes.taskIndex.options.status.running')
     }
   },
   {

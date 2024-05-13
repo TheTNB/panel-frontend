@@ -120,6 +120,14 @@
         "updatedAt": "updated at",
         "actions": "actions"
       },
+      "options": {
+        "status": {
+          "finished": "finished",
+          "waiting": "waiting",
+          "failed": "failed",
+          "running": "running"
+        }
+      },
       "logModal": {
         "title": "Task log",
         "autoRefresh": {
