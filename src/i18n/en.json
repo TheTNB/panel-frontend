@@ -102,7 +102,24 @@
       }
     },
     "homeUpdate": {
-      "title": "Update panel"
+      "title": "Update panel",
+      "loading": "Loading update information, please wait a moment",
+      "alerts": {
+        "success": "Panel update successful",
+        "info": "The panel is already the latest version"
+      },
+      "buttons": {
+        "update": "Update"
+      },
+      "confirm": {
+        "update": {
+          "title": "Update panel",
+          "content": "Are you sure you want to update the panel?",
+          "positiveText": "Update",
+          "negativeText": "Cancel",
+          "loading": "Panel is being updated..."
+        }
+      }
     },
     "monitorIndex": {
       "title": "System Monitoring"

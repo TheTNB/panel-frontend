@@ -5,9 +5,11 @@ import type { MessageReactive } from 'naive-ui'
 import type { PanelInfo } from '@/views/home/types'
 import { formatDateTime } from '@/utils'
 import { router } from '@/router'
+import { useI18n } from 'vue-i18n'
 
 const versions = ref<PanelInfo[] | null>(null)
 let messageReactive: MessageReactive | null = null
+const { t } = useI18n()
 
 const getVersions = () => {
   info.updateInfo().then((res: any) => {
@@ -17,17 +19,17 @@ const getVersions = () => {
 
 const handleUpdate = () => {
   window.$dialog.warning({
-    title: '警告',
-    content: '确定要更新面板？',
-    positiveText: '确定',
-    negativeText: '取消',
+    title: t('routes.homeUpdate.confirm.update.title'),
+    content: t('routes.homeUpdate.confirm.update.content'),
+    positiveText: t('routes.homeUpdate.confirm.update.positiveText'),
+    negativeText: t('routes.homeUpdate.confirm.update.negativeText'),
     onPositiveClick: () => {
-      messageReactive = window.$message.loading('面板更新中...', {
+      messageReactive = window.$message.loading(t('routes.homeUpdate.confirm.update.loading'), {
         duration: 0
       })
       info.update().then(() => {
         messageReactive?.destroy()
-        window.$message.success('面板更新成功')
+        window.$message.success(t('routes.homeUpdate.alerts.success'))
         setTimeout(() => {
           setTimeout(() => {
             window.location.reload()
@@ -37,7 +39,7 @@ const handleUpdate = () => {
       })
     },
     onNegativeClick: () => {
-      window.$message.info('取消更新')
+      window.$message.info(t('routes.homeUpdate.alerts.info'))
     }
   })
 }
@@ -57,7 +59,7 @@ onMounted(() => {
             class="mr-5"
             icon="material-symbols:arrow-circle-up-outline-rounded"
           />
-          立即更新
+          {{ $t('routes.homeUpdate.button.update') }}
         </n-button>
       </div>
     </template>
@@ -73,7 +75,7 @@ onMounted(() => {
       </n-timeline-item>
     </n-timeline>
     <div v-else pt-40>
-      <n-result status="418" title="Loading..." description="正在加载更新信息，稍等片刻">
+      <n-result status="418" title="Loading..." :description="$t('routes.homeUpdate.loading')">
       </n-result>
     </div>
   </CommonPage>
