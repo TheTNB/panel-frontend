@@ -4,6 +4,7 @@ import type { CountInfo, HomePlugin, NowMonitor, SystemInfo } from './types'
 import { router } from '@/router'
 import { NButton, NPopconfirm } from 'naive-ui'
 import { useAppStore } from '@/store'
+import { formatBytes, formatPercent } from '@/utils/file'
 
 const appStore = useAppStore()
 
@@ -107,24 +108,6 @@ const handleUpdate = () => {
       window.$message.success('当前已是最新版本')
     }
   })
-}
-
-const formatPercent = (num: any) => {
-  num = Number(num)
-  return Number(num.toFixed(2))
-}
-
-const formatBytes = (size: any) => {
-  size = Number(size)
-  let units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-  let i = 0
-
-  while (size >= 1024 && i < units.length) {
-    size /= 1024
-    i++
-  }
-
-  return size.toFixed(2) + ' ' + units[i]
 }
 
 let eggCount = 0

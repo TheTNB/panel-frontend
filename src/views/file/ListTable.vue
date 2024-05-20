@@ -1,0 +1,402 @@
+<script setup lang="ts">
+import type { DataTableColumns } from 'naive-ui'
+import { NButton, NInput, NPopconfirm, NPopselect, NSpace } from 'naive-ui'
+import type { RowData } from 'naive-ui/es/data-table/src/interface'
+import file from '@/api/panel/file'
+import TheIcon from '@/components/custom/TheIcon.vue'
+import {
+  checkName,
+  checkPath,
+  formatBytes,
+  formatPercent,
+  getExt,
+  getFilename,
+  getIconByExt,
+  isArchive
+} from '@/utils/file'
+import EditModal from '@/views/file/EditModal.vue'
+import EventBus from '@/utils/event'
+
+const loading = ref(false)
+const path = defineModel<string>('path', { type: String, required: true })
+const selected = defineModel<any[]>('selected', { type: Array, default: () => [] })
+const editorModal = ref(false)
+const editorFile = ref('')
+
+const renameModal = ref(false)
+const renameModel = ref({
+  source: '',
+  target: ''
+})
+const unArchiveModal = ref(false)
+const unArchiveModel = ref({
+  path: '',
+  file: ''
+})
+
+const messages = ref<any>({})
+
+const columns: DataTableColumns<RowData> = [
+  {
+    type: 'selection',
+    fixed: 'left'
+  },
+  {
+    title: '名称',
+    key: 'name',
+    ellipsis: {
+      tooltip: true
+    },
+    render(row) {
+      let icon = 'bi:file-earmark'
+      if (row.dir) {
+        icon = 'bi:folder'
+      } else {
+        icon = getIconByExt(getExt(row.name))
+      }
+
+      return h(
+        NSpace,
+        {
+          onClick: () => {
+            if (row.dir) {
+              path.value = row.full
+            }
+          }
+        },
+        () => [
+          h(TheIcon, { icon }),
+          h(
+            'p',
+            {},
+            {
+              default: () => {
+                if (row.symlink) {
+                  return row.name + ' -> ' + row.link
+                } else {
+                  return row.name
+                }
+              }
+            }
+          )
+        ]
+      )
+    }
+  },
+  { title: '权限', key: 'mode', width: '100' },
+  { title: '所有者', key: 'owner', width: '100' },
+  { title: '组', key: 'group', width: '100' },
+  { title: '大小', key: 'size', width: '100' },
+  { title: '修改时间', key: 'modify', width: '200' },
+  {
+    title: '操作',
+    key: 'action',
+    width: '340',
+    render(row) {
+      return h(
+        NSpace,
+        {},
+        {
+          default: () => [
+            h(
+              NButton,
+              {
+                tertiary: true,
+                size: 'small',
+                onClick: () => {
+                  if (!row.dir && !row.symlink) {
+                    editorFile.value = row.full
+                    editorModal.value = true
+                  } else {
+                    path.value = row.full
+                  }
+                }
+              },
+              {
+                default: () => {
+                  if (!row.dir && !row.symlink) {
+                    return '编辑'
+                  } else {
+                    return '打开'
+                  }
+                }
+              }
+            ),
+            h(
+              NButton,
+              {
+                tertiary: true,
+                size: 'small',
+                onClick: () => {
+                  if (row.dir) {
+                    // TODO 压缩文件夹
+                  } else {
+                    const timestamp = new Date().getTime()
+                    messages.value[timestamp] = window.$message.loading('开始下载...', {
+                      duration: 0
+                    })
+
+                    file.download(row.full, timestamp).then((res: any) => {
+                      const blob = new Blob([res], { type: 'application/octet-stream' })
+                      const downloadUrl = window.URL.createObjectURL(blob)
+                      const a = document.createElement('a')
+                      a.href = downloadUrl
+                      a.download = row.name
+                      document.body.appendChild(a)
+                      a.click()
+
+                      // 清理
+                      a.remove()
+                      messages.value[timestamp]?.destroy()
+                      window.URL.revokeObjectURL(downloadUrl)
+                      window.$message.success('下载成功')
+                    })
+                  }
+                }
+              },
+              {
+                default: () => {
+                  if (row.dir) {
+                    return '压缩'
+                  } else {
+                    return '下载'
+                  }
+                }
+              }
+            ),
+            h(
+              NButton,
+              {
+                tertiary: true,
+                size: 'small',
+                onClick: () => {
+                  renameModel.value.source = getFilename(row.name)
+                  renameModel.value.target = getFilename(row.name)
+                  renameModal.value = true
+                }
+              },
+              { default: () => '重命名' }
+            ),
+            h(
+              NPopconfirm,
+              {
+                onPositiveClick: () => {
+                  file.delete(row.full).then(() => {
+                    window.$message.success('删除成功')
+                    EventBus.emit('file:refresh')
+                  })
+                },
+                onNegativeClick: () => {}
+              },
+              {
+                default: () => {
+                  return '确定删除吗？'
+                },
+                trigger: () => {
+                  return h(
+                    NButton,
+                    {
+                      tertiary: true,
+                      size: 'small',
+                      type: 'error'
+                    },
+                    { default: () => '删除' }
+                  )
+                }
+              }
+            ),
+            h(
+              NPopselect,
+              {
+                options: [
+                  { label: '复制', value: 'copy' },
+                  { label: '移动', value: 'move' },
+                  { label: '权限', value: 'mode' },
+                  { label: '压缩', value: 'archive' },
+                  { label: '解压', value: 'unarchive', disabled: !isArchive(row.name) }
+                ],
+                onUpdateValue: (value) => {
+                  if (value === 'mode') {
+                    window.$message.error('暂不支持修改权限')
+                    // TODO 修改权限
+                  } else if (value === 'archive') {
+                    window.$message.error('暂不支持压缩')
+                    // TODO 压缩文件
+                  } else if (value === 'unarchive') {
+                    unArchiveModel.value.file = row.full
+                    unArchiveModel.value.path = path.value
+                    unArchiveModal.value = true
+                  }
+                }
+              },
+              {
+                default: () => {
+                  return h(
+                    NButton,
+                    {
+                      tertiary: true,
+                      size: 'small'
+                    },
+                    { default: () => '更多' }
+                  )
+                }
+              }
+            )
+          ]
+        }
+      )
+    }
+  }
+]
+
+const data = ref<RowData[]>([])
+
+const pagination = reactive({
+  page: 1,
+  pageCount: 1,
+  pageSize: 20,
+  itemCount: 0,
+  showQuickJumper: true,
+  showSizePicker: true,
+  pageSizes: [20, 50, 100, 200, 500, 1000]
+})
+
+const handlePageSizeChange = (pageSize: number) => {
+  pagination.pageSize = pageSize
+  handlePageChange(1)
+}
+
+const handlePageChange = async (page: number) => {
+  loading.value = true
+  await getList(path.value, page, pagination.pageSize!).finally(() => {
+    loading.value = false
+  })
+}
+
+const handleRefresh = async () => {
+  loading.value = true
+  await getList(path.value, pagination.page, pagination.pageSize!).finally(() => {
+    loading.value = false
+  })
+}
+
+const getList = async (path: string, page: number, limit: number) => {
+  await file.list(path, page, limit).then((res) => {
+    data.value = res.data.items
+    pagination.page = page
+    pagination.itemCount = res.data.total
+    pagination.pageCount = res.data.total / pagination.pageSize! + 1
+  })
+}
+
+const handleRename = () => {
+  const source = path.value + '/' + renameModel.value.source
+  const target = path.value + '/' + renameModel.value.target
+  if (!checkName(renameModel.value.source) || !checkName(renameModel.value.target)) {
+    window.$message.error('名称不合法')
+    console.log(source, target)
+    return
+  }
+
+  file.move(source, target).then(() => {
+    window.$message.success('重命名成功')
+    renameModal.value = false
+    EventBus.emit('file:refresh')
+  })
+}
+
+const handleUnArchive = () => {
+  if (!checkPath(unArchiveModel.value.path)) {
+    window.$message.error('路径不合法')
+    return
+  }
+
+  file.unArchive(unArchiveModel.value.file, unArchiveModel.value.path).then(() => {
+    window.$message.success('解压成功')
+    unArchiveModal.value = false
+    EventBus.emit('file:refresh')
+  })
+}
+
+const onChecked = (rowKeys: any) => {
+  selected.value = rowKeys
+}
+
+onMounted(() => {
+  watch(
+    path,
+    () => {
+      handlePageChange(1)
+      EventBus.emit('push-history', path.value)
+    },
+    { immediate: true }
+  )
+  EventBus.on('file:refresh', handleRefresh)
+  EventBus.on('file:download-progress', (data: any) => {
+    messages.value[data['timestamp']].content =
+      `${formatPercent(data['progress'].progress * 100)}% | 总共 ${formatBytes(data['progress'].total)} | 已下载 ${formatBytes(data['progress'].loaded)} | 速度 ${formatBytes(data['progress'].rate)}`
+  })
+})
+
+onUnmounted(() => {
+  EventBus.off('file:refresh', handleRefresh)
+})
+</script>
+
+<template>
+  <n-data-table
+    size="small"
+    :columns="columns"
+    :data="data"
+    :loading="loading"
+    :pagination="pagination"
+    :row-key="(row: any) => row.full"
+    max-height="60vh"
+    remote
+    striped
+    virtual-scroll
+    @update:page="handlePageChange"
+    @update:page-size="handlePageSizeChange"
+    @update:checked-row-keys="onChecked"
+  />
+
+  <edit-modal v-model:show="editorModal" v-model:file="editorFile" />
+  <n-modal
+    v-model:show="renameModal"
+    preset="card"
+    :title="'重命名 - ' + renameModel.source"
+    style="width: 60vw"
+    size="huge"
+    :bordered="false"
+    :segmented="false"
+  >
+    <n-flex vertical>
+      <n-form>
+        <n-form-item label="新名称">
+          <n-input v-model:value="renameModel.target" />
+        </n-form-item>
+      </n-form>
+      <n-button type="primary" @click="handleRename">保存</n-button>
+    </n-flex>
+  </n-modal>
+  <n-modal
+    v-model:show="unArchiveModal"
+    preset="card"
+    :title="'解压缩 - ' + unArchiveModel.file"
+    style="width: 60vw"
+    size="huge"
+    :bordered="false"
+    :segmented="false"
+  >
+    <n-flex vertical>
+      <n-form>
+        <n-form-item label="解压到">
+          <n-input v-model:value="unArchiveModel.path" />
+        </n-form-item>
+      </n-form>
+      <n-button type="primary" @click="handleUnArchive">解压</n-button>
+    </n-flex>
+  </n-modal>
+</template>
+
+<style scoped lang="scss"></style>
