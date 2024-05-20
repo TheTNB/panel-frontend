@@ -13,7 +13,96 @@
       "title": "File Management"
     },
     "homeIndex": {
-      "title": "Dashboard"
+      "title": "Dashboard",
+      "website": "Website",
+      "database": "Database",
+      "cron": "Scheduled Tasks",
+      "jihu": "Open Source",
+      "resources": {
+        "title": "Resource Usage",
+        "cpu": {
+          "used" : "{used} CPU / {total} threads"
+        },
+        "memory": {
+          "title": "Memory",
+          "physical": {
+            "used": "Physical used {used} / {total} total"
+          },
+          "swap": {
+            "used": "Swap used  {used} / {total} total"
+          }
+        }
+      },
+      "loads": {
+        "title": "System Load",
+        "load": "{load} minute load",
+        "time": "nearly {time} minutes"
+      },
+      "traffic": {
+        "title": "Real-Time Traffic",
+        "network": {
+          "title": "Network",
+          "current": "Current uplink { sent } / current downlink { received }",
+          "total": "Total uplink { sent } / total downlink { received }"
+        },
+        "disk": {
+          "title": "Disk",
+          "current": "Current read { read } / current write { write }",
+          "total": "Total read { read } / total write { write }"
+        }
+      },
+      "store": {
+        "title": "Storage",
+        "columns": {
+          "path": "Path",
+          "type": "Type",
+          "usageRate": "Usage Rate",
+          "total": "Total",
+          "used": "Used",
+          "free": "Free"
+        }
+      },
+      "system": {
+        "title": "System Information",
+        "columns": {
+          "os": "OS",
+          "panel": "Panel Version",
+          "uptime": "Uptime",
+          "operate": "Operate",
+          "loading": "loading..."
+        },
+        "restart": {
+          "label": "Restart",
+          "confirm": "Are you sure you want to restart the panel?",
+          "success": "Restart successful",
+          "loading": "Restarting..."
+        },
+        "update": {
+          "label": "Update",
+          "success": "Update successful"
+        }
+      },
+      "eggs": {
+        "count": {
+          "gt10": "What are you doing, ouch!",
+          "gt4":  "Are you awesome, Brother Kun?",
+          "gt0": "If you look at it one more time, it will explode."
+        }
+      },
+      "about": {
+        "title": "About the panel",
+        "springGreeting": "The Shuxinfeng development team wishes everyone a happy 2024 Beginning of Spring! No bugs ever! Never downtime!",
+        "specialThanks": "Special thanks to {supporter} for their strong support of the panel!",
+        "welcomeMessage": "Welcome to the Haotzi Linux Panel. If you encounter any issues, you can seek help through the {group} / {channel} / {github}.",
+        "links": {
+          "group": "group",
+          "channel": "channel",
+          "supporter": ""
+        }
+      }
+    },
+    "homeUpdate": {
+      "title": "Update panel"
     },
     "monitorIndex": {
       "title": "System Monitoring"

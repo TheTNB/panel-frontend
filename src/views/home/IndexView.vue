@@ -4,9 +4,10 @@ import type { CountInfo, HomePlugin, NowMonitor, SystemInfo } from './types'
 import { router } from '@/router'
 import { NButton, NPopconfirm } from 'naive-ui'
 import { useAppStore } from '@/store'
+import { useI18n } from 'vue-i18n'
 
 const appStore = useAppStore()
-
+const { t } = useI18n()
 const nowMonitor = ref<NowMonitor | null>(null)
 const systemInfo = ref<SystemInfo | null>(null)
 const homePlugins = ref<HomePlugin[] | null>(null)
@@ -90,9 +91,9 @@ const getHomePlugins = async () => {
 
 const handleRestartPanel = () => {
   clearInterval(homeInterval)
-  window.$message.loading('面板重启中...')
+  window.$message.loading(t('routes.homeIndex.system.restart.loading'))
   info.restart().then(() => {
-    window.$message.success('面板重启成功')
+    window.$message.success(t('routes.homeIndex.system.restart.success'))
     setTimeout(() => {
       appStore.reloadPage()
     }, 3000)
@@ -104,7 +105,7 @@ const handleUpdate = () => {
     if (res.data.update) {
       router.push({ name: 'home-update' })
     } else {
-      window.$message.success('当前已是最新版本')
+      window.$message.success(t('routes.homeIndex.system.update.success'))
     }
   })
 }
@@ -131,11 +132,11 @@ let eggCount = 0
 const getEgg = () => {
   eggCount++
   if (eggCount > 10) {
-    return '你干嘛，哎呦！'
+    return t('routes.homeIndex.eggs.count.gt10')
   } else if (eggCount > 4) {
-    return '厉不厉害你坤哥'
+    return t('routes.homeIndex.eggs.count.gt4')
   } else {
-    return '在多一眼看一眼就会爆炸'
+    return t('routes.homeIndex.eggs.count.gt0')
   }
 }
 
@@ -173,22 +174,31 @@ onUnmounted(() => {
             <n-page-header :subtitle="systemInfo?.panel_version">
               <n-grid :cols="4">
                 <n-gi>
-                  <n-statistic label="网站" :value="countInfo.website + ' 个'" />
+                  <n-statistic
+                    :label="$t('routes.homeIndex.website')"
+                    :value="countInfo.website + ' 个'"
+                  />
                 </n-gi>
                 <n-gi>
-                  <n-statistic label="数据库" :value="countInfo.database + ' 个'" />
+                  <n-statistic
+                    :label="$t('routes.homeIndex.database')"
+                    :value="countInfo.database + ' 个'"
+                  />
                 </n-gi>
                 <n-gi>
                   <n-statistic label="FTP" :value="countInfo.ftp + ' 个'" />
                 </n-gi>
                 <n-gi>
-                  <n-statistic label="计划任务" :value="countInfo.cron + ' 个'" />
+                  <n-statistic
+                    :label="$t('routes.homeIndex.cron')"
+                    :value="countInfo.cron + ' 个'"
+                  />
                 </n-gi>
               </n-grid>
               <template #title> 耗子 Linux 面板</template>
               <template #extra>
                 <n-space>
-                  <n-button @click="toJiHu">开源地址</n-button>
+                  <n-button @click="toJiHu">{{ $t('routes.homeIndex.jihu') }}</n-button>
                 </n-space>
               </template>
             </n-page-header>
@@ -202,7 +212,12 @@ onUnmounted(() => {
           responsive="screen"
         >
           <n-gi>
-            <n-card :segmented="true" rounded-10 size="small" title="资源使用">
+            <n-card
+              :segmented="true"
+              rounded-10
+              size="small"
+              :title="$t('routes.homeIndex.resources.title')"
+            >
               <n-space v-if="nowMonitor" vertical :size="30">
                 <n-thing>
                   <template #avatar>
@@ -220,7 +235,14 @@ onUnmounted(() => {
                       :indicator-placement="'inside'"
                     />
                   </template>
-                  <p>{{ nowMonitor.cpus.length }} CPU / 共 {{ cores }} 线程</p>
+                  <p>
+                    {{
+                      $t('routes.homeIndex.resources.cpu.used', {
+                        used: nowMonitor.cpus.length,
+                        total: cores
+                      })
+                    }}
+                  </p>
                   <p>{{ nowMonitor.cpus[0].modelName }}</p>
                 </n-thing>
                 <n-thing v-if="nowMonitor">
@@ -231,7 +253,7 @@ onUnmounted(() => {
                       </n-icon>
                     </n-avatar>
                   </template>
-                  <template #header> 内存</template>
+                  <template #header> {{ $t('routes.homeIndex.resources.memory.title') }}</template>
                   <template #description>
                     <n-progress
                       type="line"
@@ -241,16 +263,20 @@ onUnmounted(() => {
                     />
                   </template>
                   <p>
-                    物理内存 使用
-                    {{ formatBytes(nowMonitor.mem.used) }}
-                    / 总共
-                    {{ formatBytes(nowMonitor.mem.total) }}
+                    {{
+                      $t('routes.homeIndex.resources.memory.physical.used', {
+                        used: formatBytes(nowMonitor.mem.used),
+                        total: formatBytes(nowMonitor.mem.total)
+                      })
+                    }}
                   </p>
                   <p>
-                    交换分区 使用
-                    {{ formatBytes(nowMonitor.swap.used) }}
-                    / 总共
-                    {{ formatBytes(nowMonitor.swap.total) }}
+                    {{
+                      $t('routes.homeIndex.resources.memory.swap.used', {
+                        used: formatBytes(nowMonitor.swap.used),
+                        total: formatBytes(nowMonitor.swap.total)
+                      })
+                    }}
                   </p>
                 </n-thing>
               </n-space>
@@ -258,7 +284,12 @@ onUnmounted(() => {
             </n-card>
           </n-gi>
           <n-gi>
-            <n-card :segmented="true" rounded-10 size="small" title="系统负载">
+            <n-card
+              :segmented="true"
+              rounded-10
+              size="small"
+              :title="$t('routes.homeIndex.loads.title')"
+            >
               <n-space v-if="nowMonitor" vertical size="large">
                 <n-thing>
                   <template #avatar>
@@ -268,7 +299,9 @@ onUnmounted(() => {
                       </n-icon>
                     </n-avatar>
                   </template>
-                  <template #header> 近 1 分钟</template>
+                  <template #header>
+                    {{ $t('routes.homeIndex.loads.time', { time: '1' }) }}
+                  </template>
                   <n-popover trigger="hover" placement="top-end">
                     <template #trigger>
                       <n-progress
@@ -278,7 +311,8 @@ onUnmounted(() => {
                       />
                     </template>
                     <span>
-                      1 分钟负载 <n-tag type="primary">{{ nowMonitor.load.load1 }}</n-tag>
+                      {{ $t('routes.homeIndex.loads.load', { load: '1' }) }}
+                      <n-tag type="primary">{{ nowMonitor.load.load1 }}</n-tag>
                     </span>
                   </n-popover>
                 </n-thing>
@@ -291,7 +325,9 @@ onUnmounted(() => {
                       </n-icon>
                     </n-avatar>
                   </template>
-                  <template #header> 近 5 分钟</template>
+                  <template #header>
+                    {{ $t('routes.homeIndex.loads.time', { time: '5' }) }}
+                  </template>
                   <n-popover trigger="hover" placement="top-end">
                     <template #trigger>
                       <n-progress
@@ -301,7 +337,8 @@ onUnmounted(() => {
                       />
                     </template>
                     <span>
-                      5 分钟负载 <n-tag type="primary">{{ nowMonitor.load.load5 }}</n-tag>
+                      {{ $t('routes.homeIndex.loads.load', { load: '5' }) }}
+                      <n-tag type="primary">{{ nowMonitor.load.load5 }}</n-tag>
                     </span>
                   </n-popover>
                 </n-thing>
@@ -313,7 +350,9 @@ onUnmounted(() => {
                       </n-icon>
                     </n-avatar>
                   </template>
-                  <template #header> 近 15 分钟</template>
+                  <template #header>
+                    {{ $t('routes.homeIndex.loads.time', { time: '15' }) }}
+                  </template>
                   <n-popover trigger="hover" placement="top-end">
                     <template #trigger>
                       <n-progress
@@ -323,7 +362,8 @@ onUnmounted(() => {
                       />
                     </template>
                     <span>
-                      15 分钟负载 <n-tag type="primary">{{ nowMonitor.load.load15 }}</n-tag>
+                      {{ $t('routes.homeIndex.loads.load', { load: '15' }) }}
+                      <n-tag type="primary">{{ nowMonitor.load.load15 }}</n-tag>
                     </span>
                   </n-popover>
                 </n-thing>
@@ -332,7 +372,12 @@ onUnmounted(() => {
             </n-card>
           </n-gi>
           <n-gi>
-            <n-card :segmented="true" rounded-10 size="small" title="实时流量">
+            <n-card
+              :segmented="true"
+              rounded-10
+              size="small"
+              :title="$t('routes.homeIndex.traffic.title')"
+            >
               <n-space v-if="nowMonitor" vertical :size="36">
                 <n-thing>
                   <template #avatar>
@@ -342,14 +387,22 @@ onUnmounted(() => {
                       </n-icon>
                     </n-avatar>
                   </template>
-                  <template #header> 网络</template>
+                  <template #header> {{ $t('routes.homeIndex.traffic.network.title') }}</template>
                   <p>
-                    实时上行 {{ formatBytes(netCurrentSent) }}/s / 实时下行
-                    {{ formatBytes(netCurrentRecv) }}/s
+                    {{
+                      $t('routes.homeIndex.traffic.network.current', {
+                        sent: formatBytes(netCurrentSent),
+                        received: formatBytes(netCurrentRecv)
+                      })
+                    }}
                   </p>
                   <p>
-                    累计上行 {{ formatBytes(netTotalSent) }} / 累计下行
-                    {{ formatBytes(netTotalRecv) }}
+                    {{
+                      $t('routes.homeIndex.traffic.network.total', {
+                        sent: formatBytes(netTotalSent),
+                        received: formatBytes(netTotalRecv)
+                      })
+                    }}
                   </p>
                 </n-thing>
                 <n-thing>
@@ -360,14 +413,22 @@ onUnmounted(() => {
                       </n-icon>
                     </n-avatar>
                   </template>
-                  <template #header> 磁盘</template>
+                  <template #header> {{ $t('routes.homeIndex.traffic.disk.title') }}</template>
                   <p>
-                    实时读取 {{ formatBytes(diskCurrentRead) }}/s / 实时写入
-                    {{ formatBytes(diskCurrentWrite) }}/s
+                    {{
+                      $t('routes.homeIndex.traffic.disk.current', {
+                        read: formatBytes(diskCurrentRead),
+                        write: formatBytes(diskCurrentWrite)
+                      })
+                    }}
                   </p>
                   <p>
-                    累计读取 {{ formatBytes(diskTotalRead) }} / 累计写入
-                    {{ formatBytes(diskTotalWrite) }}
+                    {{
+                      $t('routes.homeIndex.traffic.disk.total', {
+                        read: formatBytes(diskTotalRead),
+                        write: formatBytes(diskTotalWrite)
+                      })
+                    }}
                   </p>
                 </n-thing>
               </n-space>
@@ -384,7 +445,12 @@ onUnmounted(() => {
         >
           <n-gi span="2 s:1 m:1 l:2">
             <div min-w-375 flex-1>
-              <n-card :segmented="true" rounded-10 size="small" title="存储信息">
+              <n-card
+                :segmented="true"
+                rounded-10
+                size="small"
+                :title="$t('routes.homeIndex.store.title')"
+              >
                 <n-space v-if="nowMonitor" class="pb-10 pt-10">
                   <div v-for="item in nowMonitor?.disk_usage" :key="item.path">
                     <n-popover trigger="hover">
@@ -398,27 +464,27 @@ onUnmounted(() => {
                       </template>
                       <n-table :single-line="false">
                         <tr>
-                          <th>挂载点</th>
+                          <th>{{ $t('routes.homeIndex.store.columns.path') }}</th>
                           <td>{{ item.path }}</td>
                         </tr>
                         <tr>
-                          <th>文件系统</th>
+                          <th>{{ $t('routes.homeIndex.store.columns.type') }}</th>
                           <td>{{ item.fstype }}</td>
                         </tr>
                         <tr>
-                          <th>Inodes 使用率</th>
+                          <th>Inodes {{ $t('routes.homeIndex.store.columns.used') }}</th>
                           <td>{{ formatPercent(item.inodesUsedPercent) }}%</td>
                         </tr>
                         <tr>
-                          <th>Inodes 总共</th>
+                          <th>Inodes {{ $t('routes.homeIndex.store.columns.total') }}</th>
                           <td>{{ item.inodesTotal }}</td>
                         </tr>
                         <tr>
-                          <th>Inodes 已用</th>
+                          <th>Inodes {{ $t('routes.homeIndex.store.columns.used') }}</th>
                           <td>{{ item.inodesUsed }}</td>
                         </tr>
                         <tr>
-                          <th>Inodes 可用</th>
+                          <th>Inodes {{ $t('routes.homeIndex.store.columns.free') }}</th>
                           <td>{{ item.inodesFree }}</td>
                         </tr>
                       </n-table>
@@ -431,22 +497,35 @@ onUnmounted(() => {
           </n-gi>
           <n-gi>
             <div min-w-375 flex-1>
-              <n-card :segmented="true" rounded-10 size="small" title="系统信息">
+              <n-card
+                :segmented="true"
+                rounded-10
+                size="small"
+                :title="$t('routes.homeIndex.system.title')"
+              >
                 <n-table :single-line="false">
                   <tr>
-                    <th>系统信息</th>
-                    <td>{{ systemInfo?.os_name || '加载中...' }}</td>
+                    <th>{{ $t('routes.homeIndex.system.columns.os') }}</th>
+                    <td>
+                      {{ systemInfo?.os_name || $t('routes.homeIndex.system.columns.loading') }}
+                    </td>
                   </tr>
                   <tr>
-                    <th>面板版本</th>
-                    <td>{{ systemInfo?.panel_version || '加载中...' }}</td>
+                    <th>{{ $t('routes.homeIndex.system.columns.panel') }}</th>
+                    <td>
+                      {{
+                        systemInfo?.panel_version || $t('routes.homeIndex.system.columns.loading')
+                      }}
+                    </td>
                   </tr>
                   <tr>
-                    <th>运行时间</th>
-                    <td>{{ systemInfo?.uptime || '加载中...' }} 天</td>
+                    <th>{{ $t('routes.homeIndex.system.columns.uptime') }}</th>
+                    <td>
+                      {{ systemInfo?.uptime || $t('routes.homeIndex.system.columns.loading') }} 天
+                    </td>
                   </tr>
                   <tr>
-                    <th>操作</th>
+                    <th>{{ $t('routes.homeIndex.system.columns.operate') }}</th>
                     <td>
                       <n-space>
                         <n-popconfirm @positive-click="handleRestartPanel">
@@ -455,16 +534,16 @@ onUnmounted(() => {
                               <n-icon size="20">
                                 <icon-mdi:restart />
                               </n-icon>
-                              重启面板
+                              {{ $t('routes.homeIndex.system.restart.label') }}
                             </n-button>
                           </template>
-                          确定要重启面板吗？
+                          {{ $t('routes.homeIndex.system.restart.confirm') }}
                         </n-popconfirm>
                         <n-button type="success" @click="handleUpdate">
                           <n-icon size="20">
                             <icon-mdi:arrow-up-bold-circle-outline />
                           </n-icon>
-                          检查更新
+                          {{ $t('routes.homeIndex.system.update.label') }}
                         </n-button>
                       </n-space>
                     </td>
@@ -527,7 +606,12 @@ onUnmounted(() => {
           </n-gi>
           <n-gi>
             <div min-w-375 flex-1>
-              <n-card :segmented="true" rounded-10 size="small" title="关于面板">
+              <n-card
+                :segmented="true"
+                rounded-10
+                size="small"
+                :title="$t('routes.homeIndex.about.title')"
+              >
                 <template #header-extra>
                   <n-popover trigger="hover">
                     <template #trigger>
@@ -540,21 +624,29 @@ onUnmounted(() => {
                 </template>
                 <n-space vertical :size="12">
                   <n-alert type="success">
-                    树新蜂开发组祝大家 2024 立春快乐！永无Bug！永不宕机！
+                    {{ $t('routes.homeIndex.about.springGreeting') }}
                   </n-alert>
                   <n-alert type="info">
-                    欢迎使用耗子 Linux 面板。如遇到问题，可通过
-                    <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=I1oJKSTH"> QQ 群 </a>
-                    /
-                    <a target="_blank" href="https://pd.qq.com/s/fyol46wfy"> QQ 频道 </a>
-                    /
-                    <a target="_blank" href="https://github.com/TheTNB/panel/issues"> GitHub </a>
-                    寻求帮助
+                    <span
+                      v-html="
+                        $t('routes.homeIndex.about.welcomeMessage', {
+                          group: `<a target='_blank' href='https://jq.qq.com/?_wv=1027&k=I1oJKSTH'> QQ ${$t('routes.homeIndex.about.links.group')} <\/a>`,
+                          channel: `<a target='_blank' href='https://pd.qq.com/s/fyol46wfy'> QQ ${$t('routes.homeIndex.about.links.channel')} <\/a>`,
+                          github: `<a target='_blank' href='https://github.com/TheTNB/panel/issues'> GitHub <\/a>`
+                        })
+                      "
+                    >
+                    </span>
                   </n-alert>
                   <n-alert type="info">
-                    特别感谢
-                    <a target="_blank" href="https://www.weixiaoduo.com/">『薇晓朵』</a>
-                    对面板的大力支持！
+                    <span
+                      v-html="
+                        $t('routes.homeIndex.about.specialThanks', {
+                          supporter: `<a target='_blank' href='https://www.weixiaoduo.com/'>『薇晓朵』<\/a>`
+                        })
+                      "
+                    >
+                    </span>
                   </n-alert>
                 </n-space>
               </n-card>
