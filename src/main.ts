@@ -6,24 +6,23 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { setupStore } from './store'
 import { setupRouter } from './router'
+import { setupI18n } from '@/i18n/i18n'
 import { setupNaiveDiscreteApi } from './utils'
 import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
 import info from '@/api/panel/info'
-import i18n from '@/i18n/i18n'
 
 async function setupApp() {
   const app = createApp(App)
-  app
-    .use(VueMonacoEditorPlugin, {
-      paths: {
-        vs: 'https://cdnjs.cdn.haozi.net/monaco-editor/0.47.0/min/vs'
-      },
-      'vs/nls': {
-        availableLanguages: { '*': 'zh-cn' }
-      }
-    })
-    .use(i18n)
+  app.use(VueMonacoEditorPlugin, {
+    paths: {
+      vs: 'https://cdnjs.admincdn.com/monaco-editor/0.48.0/min/vs'
+    },
+    'vs/nls': {
+      availableLanguages: { '*': 'zh-cn' }
+    }
+  })
   setupStore(app)
+  setupI18n(app)
   setupNaiveDiscreteApi()
   await setupRouter(app)
   app.mount('#app')

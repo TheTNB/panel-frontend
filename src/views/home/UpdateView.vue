@@ -7,9 +7,9 @@ import { formatDateTime } from '@/utils'
 import { router } from '@/router'
 import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const versions = ref<PanelInfo[] | null>(null)
 let messageReactive: MessageReactive | null = null
-const { t } = useI18n()
 
 const getVersions = () => {
   info.updateInfo().then((res: any) => {

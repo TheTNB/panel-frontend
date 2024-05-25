@@ -6,6 +6,7 @@ import { isUrl, renderCustomIcon, renderIcon } from '@/utils'
 import type { VNodeChild } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const router = useRouter()
 const currentRoute = useRoute()
 const permissionStore = usePermissionStore()
@@ -37,8 +38,6 @@ type MenuItem = MenuOption & {
   order: number
   children?: Array<MenuItem>
 }
-
-const { t } = useI18n()
 
 function getMenuItem(route: RouteType, basePath = ''): MenuItem {
   let menuItem: MenuItem = {

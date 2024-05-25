@@ -2,6 +2,8 @@
 import setting from '@/api/panel/setting'
 import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
+
 const model = ref({
   name: '',
   username: '',
@@ -13,8 +15,6 @@ const model = ref({
   website_path: '',
   backup_path: ''
 })
-
-const { t } = useI18n()
 
 const getSetting = () => {
   setting.list().then((res) => {

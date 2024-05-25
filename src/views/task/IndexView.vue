@@ -6,13 +6,12 @@ import task from '@/api/panel/task'
 import Editor from '@guolao/vue-monaco-editor'
 import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const taskLogModal = ref(false)
 const taskLog = ref('')
 
 const autoRefresh = ref(false)
 const currentTaskId = ref(0)
-
-const { t } = useI18n()
 
 const columns: any = [
   { type: 'selection', fixed: 'left' },

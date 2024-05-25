@@ -8,11 +8,10 @@ import type { UploadFileInfo, MessageReactive } from 'naive-ui'
 import Editor from '@guolao/vue-monaco-editor'
 import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const router = useRouter()
 let messageReactive: MessageReactive | null = null
 const selectedRowKeys = ref<any>([])
-
-const { t } = useI18n()
 
 const columns: any = [
   { type: 'selection', fixed: 'left' },

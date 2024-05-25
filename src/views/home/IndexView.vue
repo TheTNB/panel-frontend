@@ -7,8 +7,8 @@ import { useAppStore } from '@/store'
 import { useI18n } from 'vue-i18n'
 import { formatBytes, formatPercent } from '@/utils/file'
 
-const appStore = useAppStore()
 const { t } = useI18n()
+const appStore = useAppStore()
 const nowMonitor = ref<NowMonitor | null>(null)
 const systemInfo = ref<SystemInfo | null>(null)
 const homePlugins = ref<HomePlugin[] | null>(null)
