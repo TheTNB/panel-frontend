@@ -545,7 +545,12 @@ onUnmounted(() => {
         >
           <n-gi span="2 s:1 m:1 l:2">
             <div min-w-375 flex-1>
-              <n-card :segmented="true" rounded-10 size="small" title="快捷插件">
+              <n-card
+                :segmented="true"
+                rounded-10
+                size="small"
+                :title="$t('routes.homeIndex.plugins.title')"
+              >
                 <n-grid
                   v-if="homePlugins"
                   x-gap="12"
