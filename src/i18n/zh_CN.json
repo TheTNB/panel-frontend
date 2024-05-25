@@ -1,7 +1,7 @@
 {
   "name" : "HaoZi Linux Panel",
   "certIndex": {
-    "title": "签发证书"
+    "title": "TLS证书"
   },
   "containerIndex": {
     "title": "容器管理"
@@ -128,7 +128,7 @@
     "title": "资源监控"
   },
   "pluginIndex": {
-    "title": "软件插件",
+    "title": "插件市场",
     "alerts": {
       "info": "按钮点击一次即可，请勿重复点击以免重复执行！",
       "warning": "升级插件前强烈建议先备份/快照，以免出现问题时无法回滚！",

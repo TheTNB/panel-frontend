@@ -1,5 +1,6 @@
 import type { App } from 'vue'
-import { createI18n, Composer } from 'vue-i18n'
+import { createI18n } from 'vue-i18n'
+import type { Composer } from 'vue-i18n'
 import en from './en.json'
 import zh_CN from './zh_CN.json'
 import { useThemeStore } from '@/store'
