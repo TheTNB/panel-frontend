@@ -5,6 +5,9 @@ import { FitAddon } from '@xterm/addon-fit'
 import { getToken } from '@/utils'
 import CryptoJS from 'crypto-js'
 import ssh from '@/api/panel/ssh'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const msgData = '1'
 const msgResize = '2'
@@ -20,7 +23,7 @@ const handleSave = () => {
   ssh
     .saveInfo(model.value.host, model.value.port, model.value.user, model.value.password)
     .then(() => {
-      window.$message.success('保存成功')
+      window.$message.success(t('routes.sshIndex.alerts.save'))
     })
 }
 
@@ -116,20 +119,42 @@ onMounted(() => {
   <CommonPage show-footer>
     <n-space vertical>
       <n-form inline>
-        <n-form-item label="主机">
-          <n-input v-model:value="model.host" placeholder="主机" clearable size="small" />
+        <n-form-item :label="$t('routes.sshIndex.save.fields.host.label')">
+          <n-input
+            v-model:value="model.host"
+            :placeholder="$t('routes.sshIndex.save.fields.host.placeholder')"
+            clearable
+            size="small"
+          />
         </n-form-item>
-        <n-form-item label="端口">
-          <n-input-number v-model:value="model.port" placeholder="端口" clearable size="small" />
+        <n-form-item :label="$t('routes.sshIndex.save.fields.port.label')">
+          <n-input-number
+            v-model:value="model.port"
+            :placeholder="$t('routes.sshIndex.save.fields.port.placeholder')"
+            clearable
+            size="small"
+          />
         </n-form-item>
-        <n-form-item label="用户名">
-          <n-input v-model:value="model.user" placeholder="用户名" clearable size="small" />
+        <n-form-item :label="$t('routes.sshIndex.save.fields.username.label')">
+          <n-input
+            v-model:value="model.user"
+            :placeholder="$t('routes.sshIndex.save.fields.username.placeholder')"
+            clearable
+            size="small"
+          />
         </n-form-item>
-        <n-form-item label="密码">
-          <n-input v-model:value="model.password" placeholder="密码" clearable size="small" />
+        <n-form-item :label="$t('routes.sshIndex.save.fields.password.label')">
+          <n-input
+            v-model:value="model.password"
+            :placeholder="$t('routes.sshIndex.save.fields.password.placeholder')"
+            clearable
+            size="small"
+          />
         </n-form-item>
         <n-form-item>
-          <n-button type="primary" size="small" @click="handleSave">保存</n-button>
+          <n-button type="primary" size="small" @click="handleSave">
+            {{ $t('routes.sshIndex.save.actions.submit') }}
+          </n-button>
         </n-form-item>
       </n-form>
       <div

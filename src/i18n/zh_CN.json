@@ -265,7 +265,33 @@
       }
     },
     "sshIndex": {
-      "title": "SSH终端"
+      "title": "SSH终端",
+      "alerts": {
+        "save": "保存成功"
+      },
+      "save": {
+        "fields": {
+          "host": {
+            "label": "主机",
+            "placeholder": "主机"
+          },
+          "port": {
+            "label": "端口",
+            "placeholder": "端口"
+          },
+          "username": {
+            "label": "用户名",
+            "placeholder": "用户名"
+          },
+          "password": {
+              "label": "密码",
+              "placeholder": "密码"
+          }
+        },
+        "actions": {
+          "submit": "保存"
+        }
+      }
     },
     "taskIndex": {
       "title": "任务中心",
