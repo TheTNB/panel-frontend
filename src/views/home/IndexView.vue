@@ -157,25 +157,19 @@ onUnmounted(() => {
             <n-page-header :subtitle="systemInfo?.panel_version">
               <n-grid :cols="4">
                 <n-gi>
-                  <n-statistic
-                    :label="$t('homeIndex.website')"
-                    :value="countInfo.website + ' 个'"
-                  />
+                  <n-statistic :label="$t('homeIndex.website')" :value="countInfo.website" />
                 </n-gi>
                 <n-gi>
-                  <n-statistic
-                    :label="$t('homeIndex.database')"
-                    :value="countInfo.database + ' 个'"
-                  />
+                  <n-statistic :label="$t('homeIndex.database')" :value="countInfo.database" />
                 </n-gi>
                 <n-gi>
-                  <n-statistic label="FTP" :value="countInfo.ftp + ' 个'" />
+                  <n-statistic label="FTP" :value="countInfo.ftp" />
                 </n-gi>
                 <n-gi>
-                  <n-statistic :label="$t('homeIndex.cron')" :value="countInfo.cron + ' 个'" />
+                  <n-statistic :label="$t('homeIndex.cron')" :value="countInfo.cron" />
                 </n-gi>
               </n-grid>
-              <template #title> 耗子 Linux 面板</template>
+              <template #title>{{ $t('name') }}</template>
               <template #extra>
                 <n-space>
                   <n-button @click="toJiHu">{{ $t('homeIndex.jihu') }}</n-button>
@@ -600,7 +594,7 @@ onUnmounted(() => {
                 </template>
                 <n-space vertical :size="12">
                   <n-alert type="success">
-                    {{ $t('homeIndex.about.springGreeting') }}
+                    {{ $t('homeIndex.about.tnb') }}
                   </n-alert>
                   <n-alert type="info">
                     <span

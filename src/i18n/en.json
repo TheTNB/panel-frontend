@@ -1,4 +1,5 @@
 {
+  "name" : "HaoZi Linux Panel",
   "certIndex": {
     "title": "Certificates"
   },
@@ -65,7 +66,7 @@
       "title": "System Information",
       "columns": {
         "os": "OS",
-        "panel": "Panel Version",
+        "panel": "Panel",
         "uptime": "Uptime",
         "operate": "Operate",
         "loading": "loading..."
@@ -90,9 +91,9 @@
     },
     "about": {
       "title": "About the panel",
-      "springGreeting": "The Shuxinfeng development team wishes everyone a happy 2024 Beginning of Spring! No bugs ever! Never downtime!",
+      "tnb": "The TNB development team wishes everyone a happy 2024 Beginning of Spring! No bugs ever! Never downtime!",
       "specialThanks": "Special thanks to {supporter} for their strong support of the panel!",
-      "welcomeMessage": "Welcome to the Haotzi Linux Panel. If you encounter any issues, you can seek help through the {group} / {channel} / {github}.",
+      "welcomeMessage": "Welcome to the HaoZi Linux Panel. If you encounter any issues, you can seek help through the {group} / {channel} / {github}.",
       "links": {
         "group": "group",
         "channel": "channel",
@@ -221,7 +222,7 @@
       "fields": {
         "name": {
           "label": "Panel name",
-          "placeholder": "耗子 Linux 面板"
+          "placeholder": "HaoZi Linux Panel"
         },
         "username": {
           "label": "Username",
