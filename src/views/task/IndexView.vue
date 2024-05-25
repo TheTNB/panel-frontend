@@ -16,40 +16,40 @@ const currentTaskId = ref(0)
 const columns: any = [
   { type: 'selection', fixed: 'left' },
   {
-    title: t('routes.taskIndex.columns.name'),
+    title: t('taskIndex.columns.name'),
     key: 'name',
     resizable: true,
     ellipsis: { tooltip: true }
   },
   {
-    title: t('routes.taskIndex.columns.status'),
+    title: t('taskIndex.columns.status'),
     key: 'status',
     width: 100,
     ellipsis: { tooltip: true },
     render(row: any) {
       return row.status === 'finished'
-        ? t('routes.taskIndex.options.status.finished')
+        ? t('taskIndex.options.status.finished')
         : row.status === 'waiting'
-          ? t('routes.taskIndex.options.status.waiting')
+          ? t('taskIndex.options.status.waiting')
           : row.status === 'failed'
-            ? t('routes.taskIndex.options.status.failed')
-            : t('routes.taskIndex.options.status.running')
+            ? t('taskIndex.options.status.failed')
+            : t('taskIndex.options.status.running')
     }
   },
   {
-    title: t('routes.taskIndex.columns.createdAt'),
+    title: t('taskIndex.columns.createdAt'),
     key: 'created_at',
     width: 160,
     ellipsis: { tooltip: true }
   },
   {
-    title: t('routes.taskIndex.columns.updatedAt'),
+    title: t('taskIndex.columns.updatedAt'),
     key: 'updated_at',
     width: 160,
     ellipsis: { tooltip: true }
   },
   {
-    title: t('routes.taskIndex.columns.actions'),
+    title: t('taskIndex.columns.actions'),
     key: 'actions',
     width: 200,
     align: 'center',
@@ -71,7 +71,7 @@ const columns: any = [
                 }
               },
               {
-                default: () => t('routes.taskIndex.buttons.log'),
+                default: () => t('taskIndex.buttons.log'),
                 icon: renderIcon('material-symbols:visibility', { size: 14 })
               }
             )
@@ -82,12 +82,12 @@ const columns: any = [
               {
                 onPositiveClick: () => handleDelete(row.id),
                 onNegativeClick: () => {
-                  window.$message.info(t('routes.taskIndex.buttons.undelete'))
+                  window.$message.info(t('taskIndex.buttons.undelete'))
                 }
               },
               {
                 default: () => {
-                  return t('routes.taskIndex.confirm.delete')
+                  return t('taskIndex.confirm.delete')
                 },
                 trigger: () => {
                   return h(
@@ -98,7 +98,7 @@ const columns: any = [
                       style: 'margin-left: 15px;'
                     },
                     {
-                      default: () => t('routes.taskIndex.buttons.delete'),
+                      default: () => t('taskIndex.buttons.delete'),
                       icon: renderIcon('material-symbols:delete-outline', { size: 14 })
                     }
                   )
@@ -127,7 +127,7 @@ const pagination = reactive({
 
 const handleDelete = (id: number) => {
   task.delete(id).then(() => {
-    window.$message.success(t('routes.taskIndex.alerts.delete'))
+    window.$message.success(t('taskIndex.alerts.delete'))
     onPageChange(pagination.page)
   })
 }
@@ -212,7 +212,7 @@ onUnmounted(() => {
   <n-modal
     v-model:show="taskLogModal"
     preset="card"
-    :title="$t('routes.taskIndex.logModal.title')"
+    :title="$t('taskIndex.logModal.title')"
     style="width: 80vw"
     size="huge"
     :bordered="false"
@@ -232,8 +232,8 @@ onUnmounted(() => {
   >
     <template #header-extra>
       <n-switch v-model:value="autoRefresh" style="margin-right: 10px">
-        <template #checked>{{ $t('routes.taskIndex.logModal.autoRefresh.on') }}</template>
-        <template #unchecked>{{ $t('routes.taskIndex.logModal.autoRefresh.off') }}</template>
+        <template #checked>{{ $t('taskIndex.logModal.autoRefresh.on') }}</template>
+        <template #unchecked>{{ $t('taskIndex.logModal.autoRefresh.off') }}</template>
       </n-switch>
     </template>
     <Editor

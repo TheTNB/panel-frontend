@@ -15,7 +15,7 @@ export default {
       path: '',
       component: () => import('./IndexView.vue'),
       meta: {
-        title: 'routes.containerIndex.title',
+        title: 'containerIndex.title',
         icon: 'mdi:layers-outline',
         role: ['admin'],
         requireAuth: true

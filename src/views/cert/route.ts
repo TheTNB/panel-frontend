@@ -15,7 +15,7 @@ export default {
       path: '',
       component: () => import('./IndexView.vue'),
       meta: {
-        title: 'routes.certIndex.title',
+        title: 'certIndex.title',
         icon: 'mdi:certificate',
         role: ['admin'],
         requireAuth: true

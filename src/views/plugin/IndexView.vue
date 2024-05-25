@@ -11,32 +11,32 @@ const { t } = useI18n()
 const columns: any = [
   { type: 'selection', fixed: 'left' },
   {
-    title: t('routes.pluginIndex.columns.name'),
+    title: t('pluginIndex.columns.name'),
     key: 'name',
     width: 150,
     resizable: true,
     ellipsis: { tooltip: true }
   },
   {
-    title: t('routes.pluginIndex.columns.description'),
+    title: t('pluginIndex.columns.description'),
     key: 'description',
     resizable: true,
     ellipsis: { tooltip: true }
   },
   {
-    title: t('routes.pluginIndex.columns.installedVersion'),
+    title: t('pluginIndex.columns.installedVersion'),
     key: 'installed_version',
     width: 100,
     ellipsis: { tooltip: true }
   },
   {
-    title: t('routes.pluginIndex.columns.version'),
+    title: t('pluginIndex.columns.version'),
     key: 'version',
     width: 100,
     ellipsis: { tooltip: true }
   },
   {
-    title: t('routes.pluginIndex.columns.show'),
+    title: t('pluginIndex.columns.show'),
     key: 'show',
     width: 100,
     align: 'center',
@@ -50,7 +50,7 @@ const columns: any = [
     }
   },
   {
-    title: t('routes.pluginIndex.columns.actions'),
+    title: t('pluginIndex.columns.actions'),
     key: 'actions',
     width: 280,
     align: 'center',
@@ -66,7 +66,7 @@ const columns: any = [
               },
               {
                 default: () => {
-                  return t('routes.pluginIndex.confirm.update', { plugin: row.name })
+                  return t('pluginIndex.confirm.update', { plugin: row.name })
                 },
                 trigger: () => {
                   return h(
@@ -76,7 +76,7 @@ const columns: any = [
                       type: 'warning'
                     },
                     {
-                      default: () => t('routes.pluginIndex.buttons.update'),
+                      default: () => t('pluginIndex.buttons.update'),
                       icon: renderIcon('material-symbols:arrow-circle-up-outline-rounded', {
                         size: 14
                       })
@@ -95,7 +95,7 @@ const columns: any = [
                 onClick: () => handleManage(row.slug)
               },
               {
-                default: () => t('routes.pluginIndex.buttons.manage'),
+                default: () => t('pluginIndex.buttons.manage'),
                 icon: renderIcon('material-symbols:settings-outline', { size: 14 })
               }
             )
@@ -108,7 +108,7 @@ const columns: any = [
               },
               {
                 default: () => {
-                  return t('routes.pluginIndex.confirm.uninstall', { plugin: row.name })
+                  return t('pluginIndex.confirm.uninstall', { plugin: row.name })
                 },
                 trigger: () => {
                   return h(
@@ -119,7 +119,7 @@ const columns: any = [
                       style: 'margin-left: 15px;'
                     },
                     {
-                      default: () => t('routes.pluginIndex.buttons.uninstall'),
+                      default: () => t('pluginIndex.buttons.uninstall'),
                       icon: renderIcon('material-symbols:delete-outline', { size: 14 })
                     }
                   )
@@ -135,7 +135,7 @@ const columns: any = [
               },
               {
                 default: () => {
-                  return t('routes.pluginIndex.confirm.install', { plugin: row.name })
+                  return t('pluginIndex.confirm.install', { plugin: row.name })
                 },
                 trigger: () => {
                   return h(
@@ -145,7 +145,7 @@ const columns: any = [
                       type: 'info'
                     },
                     {
-                      default: () => t('routes.pluginIndex.buttons.install'),
+                      default: () => t('pluginIndex.buttons.install'),
                       icon: renderIcon('material-symbols:download-rounded', { size: 14 })
                     }
                   )
@@ -174,26 +174,26 @@ const pagination = reactive({
 
 const handleShowChange = (row: any) => {
   plugin.updateShow(row.slug, !row.show).then(() => {
-    window.$message.success(t('routes.pluginIndex.alerts.setup'))
+    window.$message.success(t('pluginIndex.alerts.setup'))
     row.show = !row.show
   })
 }
 
 const handleInstall = (slug: string) => {
   plugin.install(slug).then(() => {
-    window.$message.success(t('routes.pluginIndex.alerts.install'))
+    window.$message.success(t('pluginIndex.alerts.install'))
   })
 }
 
 const handleUpdate = (slug: string) => {
   plugin.update(slug).then(() => {
-    window.$message.success(t('routes.pluginIndex.alerts.update'))
+    window.$message.success(t('pluginIndex.alerts.update'))
   })
 }
 
 const handleUninstall = (slug: string) => {
   plugin.uninstall(slug).then(() => {
-    window.$message.success(t('routes.pluginIndex.alerts.uninstall'))
+    window.$message.success(t('pluginIndex.alerts.uninstall'))
   })
 }
 
@@ -232,8 +232,8 @@ onMounted(() => {
 <template>
   <CommonPage show-footer>
     <n-space vertical>
-      <n-alert type="info">{{ $t('routes.pluginIndex.alerts.info') }}</n-alert>
-      <n-alert type="warning">{{ $t('routes.pluginIndex.alerts.warning') }}</n-alert>
+      <n-alert type="info">{{ $t('pluginIndex.alerts.info') }}</n-alert>
+      <n-alert type="warning">{{ $t('pluginIndex.alerts.warning') }}</n-alert>
       <n-data-table
         striped
         remote

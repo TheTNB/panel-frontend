@@ -15,7 +15,7 @@ export default {
       path: '',
       component: () => import('./IndexView.vue'),
       meta: {
-        title: 'routes.pluginIndex.title',
+        title: 'pluginIndex.title',
         icon: 'mdi:puzzle-outline',
         role: ['admin'],
         requireAuth: true

@@ -15,7 +15,7 @@ export default {
       path: '',
       component: () => import('./IndexView.vue'),
       meta: {
-        title: 'routes.taskIndex.title',
+        title: 'taskIndex.title',
         icon: 'mdi:archive-sync-outline',
         role: ['admin'],
         requireAuth: true

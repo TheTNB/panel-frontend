@@ -15,7 +15,7 @@ export default {
       path: '',
       component: () => import('./IndexView.vue'),
       meta: {
-        title: 'routes.fileIndex.title',
+        title: 'fileIndex.title',
         icon: 'mdi:file-tree',
         role: ['admin'],
         requireAuth: true

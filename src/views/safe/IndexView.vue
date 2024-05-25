@@ -17,20 +17,20 @@ const model = ref({
 const columns: any = [
   { type: 'selection', fixed: 'left' },
   {
-    title: t('routes.safeIndex.columns.port'),
+    title: t('safeIndex.columns.port'),
     key: 'port',
     width: 200,
     resizable: true,
     ellipsis: { tooltip: true }
   },
   {
-    title: t('routes.safeIndex.columns.protocol'),
+    title: t('safeIndex.columns.protocol'),
     key: 'protocol',
     resizable: true,
     ellipsis: { tooltip: true }
   },
   {
-    title: t('routes.safeIndex.columns.actions'),
+    title: t('safeIndex.columns.actions'),
     key: 'actions',
     width: 140,
     align: 'center',
@@ -43,12 +43,12 @@ const columns: any = [
           {
             onPositiveClick: () => handleDelete(row),
             onNegativeClick: () => {
-              window.$message.info(t('routes.safeIndex.alerts.undelete'))
+              window.$message.info(t('safeIndex.alerts.undelete'))
             }
           },
           {
             default: () => {
-              return t('routes.safeIndex.confirm.delete')
+              return t('safeIndex.confirm.delete')
             },
             trigger: () => {
               return h(
@@ -59,7 +59,7 @@ const columns: any = [
                   style: 'margin-left: 15px;'
                 },
                 {
-                  default: () => t('routes.safeIndex.buttons.delete'),
+                  default: () => t('safeIndex.buttons.delete'),
                   icon: renderIcon('material-symbols:delete-outline', { size: 14 })
                 }
               )
@@ -92,7 +92,7 @@ const addModel = ref({
 
 const handleDelete = async (row: any) => {
   await safe.deleteFirewallRule(row.port, row.protocol).then(() => {
-    window.$message.success(t('routes.safeIndex.alerts.delete'))
+    window.$message.success(t('safeIndex.alerts.delete'))
   })
   getFirewallRules(pagination.page, pagination.pageSize).then((res) => {
     data.value = res.items
@@ -103,7 +103,7 @@ const handleDelete = async (row: any) => {
 
 const handleAdd = async () => {
   await safe.addFirewallRule(addModel.value.port, addModel.value.protocol).then(() => {
-    window.$message.success(t('routes.safeIndex.alerts.add'))
+    window.$message.success(t('safeIndex.alerts.add'))
     addModel.value.port = ''
     addModel.value.protocol = 'tcp'
   })
@@ -136,31 +136,31 @@ const getSetting = async () => {
 
 const handleFirewallStatus = () => {
   safe.setFirewallStatus(model.value.firewallStatus).then(() => {
-    window.$message.success(t('routes.safeIndex.alerts.setup'))
+    window.$message.success(t('safeIndex.alerts.setup'))
   })
 }
 
 const handleSshStatus = () => {
   safe.setSshStatus(model.value.sshStatus).then(() => {
-    window.$message.success(t('routes.safeIndex.alerts.setup'))
+    window.$message.success(t('safeIndex.alerts.setup'))
   })
 }
 
 const handlePingStatus = () => {
   safe.setPingStatus(model.value.pingStatus).then(() => {
-    window.$message.success(t('routes.safeIndex.alerts.setup'))
+    window.$message.success(t('safeIndex.alerts.setup'))
   })
 }
 
 const handleSshPort = () => {
   safe.setSshPort(model.value.sshPort).then(() => {
-    window.$message.success(t('routes.safeIndex.alerts.setup'))
+    window.$message.success(t('safeIndex.alerts.setup'))
   })
 }
 
 const batchDelete = async () => {
   if (selectedRowKeys.value.length === 0) {
-    window.$message.info(t('routes.safeIndex.alerts.select'))
+    window.$message.info(t('safeIndex.alerts.select'))
     return
   }
 
@@ -174,7 +174,7 @@ const batchDelete = async () => {
     await safe.deleteFirewallRule(port, protocol).then(() => {
       let rule = data.value.find((item) => item.port === port && item.protocol === protocol)
       window.$message.success(
-        t('routes.safeIndex.alerts.ruleDelete', { rule: rule?.port + '/' + rule?.protocol })
+        t('safeIndex.alerts.ruleDelete', { rule: rule?.port + '/' + rule?.protocol })
       )
     })
   }
@@ -219,31 +219,31 @@ onMounted(() => {
     <n-space vertical>
       <n-card flex-1 rounded-10>
         <n-form inline>
-          <n-form-item :label="$t('routes.safeIndex.filter.fields.firewall.label')">
+          <n-form-item :label="$t('safeIndex.filter.fields.firewall.label')">
             <n-switch
               v-model:value="model.firewallStatus"
               @update:value="handleFirewallStatus"
-              :checkedChildren="$t('routes.safeIndex.filter.fields.firewall.checked')"
-              :unCheckedChildren="$t('routes.safeIndex.filter.fields.firewall.unchecked')"
+              :checkedChildren="$t('safeIndex.filter.fields.firewall.checked')"
+              :unCheckedChildren="$t('safeIndex.filter.fields.firewall.unchecked')"
             />
           </n-form-item>
-          <n-form-item :label="$t('routes.safeIndex.filter.fields.ssh.label')">
+          <n-form-item :label="$t('safeIndex.filter.fields.ssh.label')">
             <n-switch
               v-model:value="model.sshStatus"
               @update:value="handleSshStatus"
-              :checkedChildren="$t('routes.safeIndex.filter.fields.ssh.checked')"
-              :unCheckedChildren="$t('routes.safeIndex.filter.fields.ssh.unchecked')"
+              :checkedChildren="$t('safeIndex.filter.fields.ssh.checked')"
+              :unCheckedChildren="$t('safeIndex.filter.fields.ssh.unchecked')"
             />
           </n-form-item>
-          <n-form-item :label="$t('routes.safeIndex.filter.fields.ping.label')">
+          <n-form-item :label="$t('safeIndex.filter.fields.ping.label')">
             <n-switch
               v-model:value="model.pingStatus"
               @update:value="handlePingStatus"
-              :checkedChildren="$t('routes.safeIndex.filter.fields.ping.checked')"
-              :unCheckedChildren="$t('routes.safeIndex.filter.fields.ping.unchecked')"
+              :checkedChildren="$t('safeIndex.filter.fields.ping.checked')"
+              :unCheckedChildren="$t('safeIndex.filter.fields.ping.unchecked')"
             />
           </n-form-item>
-          <n-form-item :label="$t('routes.safeIndex.filter.fields.ssh.label')">
+          <n-form-item :label="$t('safeIndex.filter.fields.ssh.label')">
             <n-input-number v-model:value="model.sshPort" @blur="handleSshPort" />
           </n-form-item>
         </n-form>
@@ -251,18 +251,18 @@ onMounted(() => {
       <n-space flex items-center>
         <n-popconfirm @positive-click="batchDelete">
           <template #trigger>
-            <n-button type="warning"> {{ $t('routes.safeIndex.buttons.batchDelete') }} </n-button>
+            <n-button type="warning"> {{ $t('safeIndex.buttons.batchDelete') }} </n-button>
           </template>
-          {{ $t('routes.safeIndex.confirm.batchDelete') }}
+          {{ $t('safeIndex.confirm.batchDelete') }}
         </n-popconfirm>
-        <n-text>{{ $t('routes.safeIndex.portControl.title') }}</n-text>
+        <n-text>{{ $t('safeIndex.portControl.title') }}</n-text>
         <n-input
           v-model:value="addModel.port"
-          :placeholder="$t('routes.safeIndex.portControl.fields.port.placeholder')"
+          :placeholder="$t('safeIndex.portControl.fields.port.placeholder')"
         />
         <n-select
           v-model:value="addModel.protocol"
-          :placeholder="$t('routes.safeIndex.portControl.fields.protocol.placeholder')"
+          :placeholder="$t('safeIndex.portControl.fields.protocol.placeholder')"
           style="width: 120px"
           :options="[
             { label: 'TCP', value: 'tcp' },
@@ -270,7 +270,7 @@ onMounted(() => {
           ]"
         />
         <n-button type="primary" @click="handleAdd">
-          {{ $t('routes.safeIndex.buttons.add') }}
+          {{ $t('safeIndex.buttons.add') }}
         </n-button>
       </n-space>
 

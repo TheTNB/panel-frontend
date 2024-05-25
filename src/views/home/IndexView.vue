@@ -92,9 +92,9 @@ const getHomePlugins = async () => {
 
 const handleRestartPanel = () => {
   clearInterval(homeInterval)
-  window.$message.loading(t('routes.homeIndex.system.restart.loading'))
+  window.$message.loading(t('homeIndex.system.restart.loading'))
   info.restart().then(() => {
-    window.$message.success(t('routes.homeIndex.system.restart.success'))
+    window.$message.success(t('homeIndex.system.restart.success'))
     setTimeout(() => {
       appStore.reloadPage()
     }, 3000)
@@ -106,7 +106,7 @@ const handleUpdate = () => {
     if (res.data.update) {
       router.push({ name: 'home-update' })
     } else {
-      window.$message.success(t('routes.homeIndex.system.update.success'))
+      window.$message.success(t('homeIndex.system.update.success'))
     }
   })
 }
@@ -115,11 +115,11 @@ let eggCount = 0
 const getEgg = () => {
   eggCount++
   if (eggCount > 10) {
-    return t('routes.homeIndex.eggs.count.gt10')
+    return t('homeIndex.eggs.count.gt10')
   } else if (eggCount > 4) {
-    return t('routes.homeIndex.eggs.count.gt4')
+    return t('homeIndex.eggs.count.gt4')
   } else {
-    return t('routes.homeIndex.eggs.count.gt0')
+    return t('homeIndex.eggs.count.gt0')
   }
 }
 
@@ -158,13 +158,13 @@ onUnmounted(() => {
               <n-grid :cols="4">
                 <n-gi>
                   <n-statistic
-                    :label="$t('routes.homeIndex.website')"
+                    :label="$t('homeIndex.website')"
                     :value="countInfo.website + ' 个'"
                   />
                 </n-gi>
                 <n-gi>
                   <n-statistic
-                    :label="$t('routes.homeIndex.database')"
+                    :label="$t('homeIndex.database')"
                     :value="countInfo.database + ' 个'"
                   />
                 </n-gi>
@@ -172,16 +172,13 @@ onUnmounted(() => {
                   <n-statistic label="FTP" :value="countInfo.ftp + ' 个'" />
                 </n-gi>
                 <n-gi>
-                  <n-statistic
-                    :label="$t('routes.homeIndex.cron')"
-                    :value="countInfo.cron + ' 个'"
-                  />
+                  <n-statistic :label="$t('homeIndex.cron')" :value="countInfo.cron + ' 个'" />
                 </n-gi>
               </n-grid>
               <template #title> 耗子 Linux 面板</template>
               <template #extra>
                 <n-space>
-                  <n-button @click="toJiHu">{{ $t('routes.homeIndex.jihu') }}</n-button>
+                  <n-button @click="toJiHu">{{ $t('homeIndex.jihu') }}</n-button>
                 </n-space>
               </template>
             </n-page-header>
@@ -199,7 +196,7 @@ onUnmounted(() => {
               :segmented="true"
               rounded-10
               size="small"
-              :title="$t('routes.homeIndex.resources.title')"
+              :title="$t('homeIndex.resources.title')"
             >
               <n-space v-if="nowMonitor" vertical :size="30">
                 <n-thing>
@@ -220,7 +217,7 @@ onUnmounted(() => {
                   </template>
                   <p>
                     {{
-                      $t('routes.homeIndex.resources.cpu.used', {
+                      $t('homeIndex.resources.cpu.used', {
                         used: nowMonitor.cpus.length,
                         total: cores
                       })
@@ -236,7 +233,7 @@ onUnmounted(() => {
                       </n-icon>
                     </n-avatar>
                   </template>
-                  <template #header> {{ $t('routes.homeIndex.resources.memory.title') }}</template>
+                  <template #header> {{ $t('homeIndex.resources.memory.title') }}</template>
                   <template #description>
                     <n-progress
                       type="line"
@@ -247,7 +244,7 @@ onUnmounted(() => {
                   </template>
                   <p>
                     {{
-                      $t('routes.homeIndex.resources.memory.physical.used', {
+                      $t('homeIndex.resources.memory.physical.used', {
                         used: formatBytes(nowMonitor.mem.used),
                         total: formatBytes(nowMonitor.mem.total)
                       })
@@ -255,7 +252,7 @@ onUnmounted(() => {
                   </p>
                   <p>
                     {{
-                      $t('routes.homeIndex.resources.memory.swap.used', {
+                      $t('homeIndex.resources.memory.swap.used', {
                         used: formatBytes(nowMonitor.swap.used),
                         total: formatBytes(nowMonitor.swap.total)
                       })
@@ -267,12 +264,7 @@ onUnmounted(() => {
             </n-card>
           </n-gi>
           <n-gi>
-            <n-card
-              :segmented="true"
-              rounded-10
-              size="small"
-              :title="$t('routes.homeIndex.loads.title')"
-            >
+            <n-card :segmented="true" rounded-10 size="small" :title="$t('homeIndex.loads.title')">
               <n-space v-if="nowMonitor" vertical size="large">
                 <n-thing>
                   <template #avatar>
@@ -283,7 +275,7 @@ onUnmounted(() => {
                     </n-avatar>
                   </template>
                   <template #header>
-                    {{ $t('routes.homeIndex.loads.time', { time: '1' }) }}
+                    {{ $t('homeIndex.loads.time', { time: '1' }) }}
                   </template>
                   <n-popover trigger="hover" placement="top-end">
                     <template #trigger>
@@ -294,7 +286,7 @@ onUnmounted(() => {
                       />
                     </template>
                     <span>
-                      {{ $t('routes.homeIndex.loads.load', { load: '1' }) }}
+                      {{ $t('homeIndex.loads.load', { load: '1' }) }}
                       <n-tag type="primary">{{ nowMonitor.load.load1 }}</n-tag>
                     </span>
                   </n-popover>
@@ -309,7 +301,7 @@ onUnmounted(() => {
                     </n-avatar>
                   </template>
                   <template #header>
-                    {{ $t('routes.homeIndex.loads.time', { time: '5' }) }}
+                    {{ $t('homeIndex.loads.time', { time: '5' }) }}
                   </template>
                   <n-popover trigger="hover" placement="top-end">
                     <template #trigger>
@@ -320,7 +312,7 @@ onUnmounted(() => {
                       />
                     </template>
                     <span>
-                      {{ $t('routes.homeIndex.loads.load', { load: '5' }) }}
+                      {{ $t('homeIndex.loads.load', { load: '5' }) }}
                       <n-tag type="primary">{{ nowMonitor.load.load5 }}</n-tag>
                     </span>
                   </n-popover>
@@ -334,7 +326,7 @@ onUnmounted(() => {
                     </n-avatar>
                   </template>
                   <template #header>
-                    {{ $t('routes.homeIndex.loads.time', { time: '15' }) }}
+                    {{ $t('homeIndex.loads.time', { time: '15' }) }}
                   </template>
                   <n-popover trigger="hover" placement="top-end">
                     <template #trigger>
@@ -345,7 +337,7 @@ onUnmounted(() => {
                       />
                     </template>
                     <span>
-                      {{ $t('routes.homeIndex.loads.load', { load: '15' }) }}
+                      {{ $t('homeIndex.loads.load', { load: '15' }) }}
                       <n-tag type="primary">{{ nowMonitor.load.load15 }}</n-tag>
                     </span>
                   </n-popover>
@@ -359,7 +351,7 @@ onUnmounted(() => {
               :segmented="true"
               rounded-10
               size="small"
-              :title="$t('routes.homeIndex.traffic.title')"
+              :title="$t('homeIndex.traffic.title')"
             >
               <n-space v-if="nowMonitor" vertical :size="36">
                 <n-thing>
@@ -370,10 +362,10 @@ onUnmounted(() => {
                       </n-icon>
                     </n-avatar>
                   </template>
-                  <template #header> {{ $t('routes.homeIndex.traffic.network.title') }}</template>
+                  <template #header> {{ $t('homeIndex.traffic.network.title') }}</template>
                   <p>
                     {{
-                      $t('routes.homeIndex.traffic.network.current', {
+                      $t('homeIndex.traffic.network.current', {
                         sent: formatBytes(netCurrentSent),
                         received: formatBytes(netCurrentRecv)
                       })
@@ -381,7 +373,7 @@ onUnmounted(() => {
                   </p>
                   <p>
                     {{
-                      $t('routes.homeIndex.traffic.network.total', {
+                      $t('homeIndex.traffic.network.total', {
                         sent: formatBytes(netTotalSent),
                         received: formatBytes(netTotalRecv)
                       })
@@ -396,10 +388,10 @@ onUnmounted(() => {
                       </n-icon>
                     </n-avatar>
                   </template>
-                  <template #header> {{ $t('routes.homeIndex.traffic.disk.title') }}</template>
+                  <template #header> {{ $t('homeIndex.traffic.disk.title') }}</template>
                   <p>
                     {{
-                      $t('routes.homeIndex.traffic.disk.current', {
+                      $t('homeIndex.traffic.disk.current', {
                         read: formatBytes(diskCurrentRead),
                         write: formatBytes(diskCurrentWrite)
                       })
@@ -407,7 +399,7 @@ onUnmounted(() => {
                   </p>
                   <p>
                     {{
-                      $t('routes.homeIndex.traffic.disk.total', {
+                      $t('homeIndex.traffic.disk.total', {
                         read: formatBytes(diskTotalRead),
                         write: formatBytes(diskTotalWrite)
                       })
@@ -432,7 +424,7 @@ onUnmounted(() => {
                 :segmented="true"
                 rounded-10
                 size="small"
-                :title="$t('routes.homeIndex.store.title')"
+                :title="$t('homeIndex.store.title')"
               >
                 <n-space v-if="nowMonitor" class="pb-10 pt-10">
                   <div v-for="item in nowMonitor?.disk_usage" :key="item.path">
@@ -447,27 +439,27 @@ onUnmounted(() => {
                       </template>
                       <n-table :single-line="false">
                         <tr>
-                          <th>{{ $t('routes.homeIndex.store.columns.path') }}</th>
+                          <th>{{ $t('homeIndex.store.columns.path') }}</th>
                           <td>{{ item.path }}</td>
                         </tr>
                         <tr>
-                          <th>{{ $t('routes.homeIndex.store.columns.type') }}</th>
+                          <th>{{ $t('homeIndex.store.columns.type') }}</th>
                           <td>{{ item.fstype }}</td>
                         </tr>
                         <tr>
-                          <th>Inodes {{ $t('routes.homeIndex.store.columns.used') }}</th>
+                          <th>Inodes {{ $t('homeIndex.store.columns.used') }}</th>
                           <td>{{ formatPercent(item.inodesUsedPercent) }}%</td>
                         </tr>
                         <tr>
-                          <th>Inodes {{ $t('routes.homeIndex.store.columns.total') }}</th>
+                          <th>Inodes {{ $t('homeIndex.store.columns.total') }}</th>
                           <td>{{ item.inodesTotal }}</td>
                         </tr>
                         <tr>
-                          <th>Inodes {{ $t('routes.homeIndex.store.columns.used') }}</th>
+                          <th>Inodes {{ $t('homeIndex.store.columns.used') }}</th>
                           <td>{{ item.inodesUsed }}</td>
                         </tr>
                         <tr>
-                          <th>Inodes {{ $t('routes.homeIndex.store.columns.free') }}</th>
+                          <th>Inodes {{ $t('homeIndex.store.columns.free') }}</th>
                           <td>{{ item.inodesFree }}</td>
                         </tr>
                       </n-table>
@@ -484,31 +476,27 @@ onUnmounted(() => {
                 :segmented="true"
                 rounded-10
                 size="small"
-                :title="$t('routes.homeIndex.system.title')"
+                :title="$t('homeIndex.system.title')"
               >
                 <n-table :single-line="false">
                   <tr>
-                    <th>{{ $t('routes.homeIndex.system.columns.os') }}</th>
+                    <th>{{ $t('homeIndex.system.columns.os') }}</th>
                     <td>
-                      {{ systemInfo?.os_name || $t('routes.homeIndex.system.columns.loading') }}
+                      {{ systemInfo?.os_name || $t('homeIndex.system.columns.loading') }}
                     </td>
                   </tr>
                   <tr>
-                    <th>{{ $t('routes.homeIndex.system.columns.panel') }}</th>
+                    <th>{{ $t('homeIndex.system.columns.panel') }}</th>
                     <td>
-                      {{
-                        systemInfo?.panel_version || $t('routes.homeIndex.system.columns.loading')
-                      }}
+                      {{ systemInfo?.panel_version || $t('homeIndex.system.columns.loading') }}
                     </td>
                   </tr>
                   <tr>
-                    <th>{{ $t('routes.homeIndex.system.columns.uptime') }}</th>
-                    <td>
-                      {{ systemInfo?.uptime || $t('routes.homeIndex.system.columns.loading') }} 天
-                    </td>
+                    <th>{{ $t('homeIndex.system.columns.uptime') }}</th>
+                    <td>{{ systemInfo?.uptime || $t('homeIndex.system.columns.loading') }} 天</td>
                   </tr>
                   <tr>
-                    <th>{{ $t('routes.homeIndex.system.columns.operate') }}</th>
+                    <th>{{ $t('homeIndex.system.columns.operate') }}</th>
                     <td>
                       <n-space>
                         <n-popconfirm @positive-click="handleRestartPanel">
@@ -517,16 +505,16 @@ onUnmounted(() => {
                               <n-icon size="20">
                                 <icon-mdi:restart />
                               </n-icon>
-                              {{ $t('routes.homeIndex.system.restart.label') }}
+                              {{ $t('homeIndex.system.restart.label') }}
                             </n-button>
                           </template>
-                          {{ $t('routes.homeIndex.system.restart.confirm') }}
+                          {{ $t('homeIndex.system.restart.confirm') }}
                         </n-popconfirm>
                         <n-button type="success" @click="handleUpdate">
                           <n-icon size="20">
                             <icon-mdi:arrow-up-bold-circle-outline />
                           </n-icon>
-                          {{ $t('routes.homeIndex.system.update.label') }}
+                          {{ $t('homeIndex.system.update.label') }}
                         </n-button>
                       </n-space>
                     </td>
@@ -549,7 +537,7 @@ onUnmounted(() => {
                 :segmented="true"
                 rounded-10
                 size="small"
-                :title="$t('routes.homeIndex.plugins.title')"
+                :title="$t('homeIndex.plugins.title')"
               >
                 <n-grid
                   v-if="homePlugins"
@@ -598,7 +586,7 @@ onUnmounted(() => {
                 :segmented="true"
                 rounded-10
                 size="small"
-                :title="$t('routes.homeIndex.about.title')"
+                :title="$t('homeIndex.about.title')"
               >
                 <template #header-extra>
                   <n-popover trigger="hover">
@@ -612,14 +600,14 @@ onUnmounted(() => {
                 </template>
                 <n-space vertical :size="12">
                   <n-alert type="success">
-                    {{ $t('routes.homeIndex.about.springGreeting') }}
+                    {{ $t('homeIndex.about.springGreeting') }}
                   </n-alert>
                   <n-alert type="info">
                     <span
                       v-html="
-                        $t('routes.homeIndex.about.welcomeMessage', {
-                          group: `<a target='_blank' href='https://jq.qq.com/?_wv=1027&k=I1oJKSTH'> QQ ${$t('routes.homeIndex.about.links.group')} <\/a>`,
-                          channel: `<a target='_blank' href='https://pd.qq.com/s/fyol46wfy'> QQ ${$t('routes.homeIndex.about.links.channel')} <\/a>`,
+                        $t('homeIndex.about.welcomeMessage', {
+                          group: `<a target='_blank' href='https://jq.qq.com/?_wv=1027&k=I1oJKSTH'> QQ ${$t('homeIndex.about.links.group')} <\/a>`,
+                          channel: `<a target='_blank' href='https://pd.qq.com/s/fyol46wfy'> QQ ${$t('homeIndex.about.links.channel')} <\/a>`,
                           github: `<a target='_blank' href='https://github.com/TheTNB/panel/issues'> GitHub <\/a>`
                         })
                       "
@@ -629,7 +617,7 @@ onUnmounted(() => {
                   <n-alert type="info">
                     <span
                       v-html="
-                        $t('routes.homeIndex.about.specialThanks', {
+                        $t('homeIndex.about.specialThanks', {
                           supporter: `<a target='_blank' href='https://www.weixiaoduo.com/'>『薇晓朵』<\/a>`
                         })
                       "

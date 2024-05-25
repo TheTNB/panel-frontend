@@ -16,14 +16,14 @@ const selectedRowKeys = ref<any>([])
 const columns: any = [
   { type: 'selection', fixed: 'left' },
   {
-    title: t('routes.websiteIndex.columns.name'),
+    title: t('websiteIndex.columns.name'),
     key: 'name',
     width: 150,
     resizable: true,
     ellipsis: { tooltip: true }
   },
   {
-    title: t('routes.websiteIndex.columns.status'),
+    title: t('websiteIndex.columns.status'),
     key: 'status',
     width: 60,
     align: 'center',
@@ -37,7 +37,7 @@ const columns: any = [
     }
   },
   {
-    title: t('routes.websiteIndex.columns.path'),
+    title: t('websiteIndex.columns.path'),
     key: 'path',
     width: 200,
     resizable: true,
@@ -67,7 +67,7 @@ const columns: any = [
     }
   },
   {
-    title: t('routes.websiteIndex.columns.remark'),
+    title: t('websiteIndex.columns.remark'),
     key: 'remark',
     width: 200,
     resizable: true,
@@ -84,7 +84,7 @@ const columns: any = [
     }
   },
   {
-    title: t('routes.websiteIndex.columns.actions'),
+    title: t('websiteIndex.columns.actions'),
     key: 'actions',
     width: 240,
     align: 'center',
@@ -484,7 +484,7 @@ onMounted(() => {
       <n-card rounded-10>
         <n-space>
           <n-button type="primary" @click="addModal = true">
-            {{ $t('routes.websiteIndex.create.trigger') }}
+            {{ $t('websiteIndex.create.trigger') }}
           </n-button>
           <n-popconfirm @positive-click="batchDelete">
             <template #trigger>
@@ -493,7 +493,7 @@ onMounted(() => {
             高危操作！确定删除选中的网站吗？
           </n-popconfirm>
           <n-button type="warning" @click="editDefaultPageModal = true">
-            {{ $t('routes.websiteIndex.edit.trigger') }}
+            {{ $t('websiteIndex.edit.trigger') }}
           </n-button>
         </n-space>
       </n-card>
@@ -514,7 +514,7 @@ onMounted(() => {
   </CommonPage>
   <n-modal
     v-model:show="addModal"
-    :title="$t('routes.websiteIndex.create.title')"
+    :title="$t('websiteIndex.create.title')"
     preset="card"
     style="width: 60vw"
     size="huge"
@@ -523,17 +523,17 @@ onMounted(() => {
     @close="addModal = false"
   >
     <n-form :model="addModel">
-      <n-form-item path="name" :label="$t('routes.websiteIndex.create.fields.name.label')">
+      <n-form-item path="name" :label="$t('websiteIndex.create.fields.name.label')">
         <n-input
           v-model:value="addModel.name"
           type="text"
           @keydown.enter.prevent
-          :placeholder="$t('routes.websiteIndex.create.fields.name.placeholder')"
+          :placeholder="$t('websiteIndex.create.fields.name.placeholder')"
         />
       </n-form-item>
       <n-row :gutter="[0, 24]">
         <n-col :span="11">
-          <n-form-item :label="$t('routes.websiteIndex.create.fields.domains.label')">
+          <n-form-item :label="$t('websiteIndex.create.fields.domains.label')">
             <n-dynamic-input
               v-model:value="addModel.domains"
               placeholder="example.com"
@@ -544,7 +544,7 @@ onMounted(() => {
         </n-col>
         <n-col :span="2"></n-col>
         <n-col :span="11">
-          <n-form-item :label="$t('routes.websiteIndex.create.fields.port.label')">
+          <n-form-item :label="$t('websiteIndex.create.fields.port.label')">
             <n-dynamic-input
               v-model:value="addModel.ports"
               placeholder="80"
@@ -556,11 +556,11 @@ onMounted(() => {
       </n-row>
       <n-row :gutter="[0, 24]">
         <n-col :span="11">
-          <n-form-item path="php" :label="$t('routes.websiteIndex.create.fields.phpVersion.label')">
+          <n-form-item path="php" :label="$t('websiteIndex.create.fields.phpVersion.label')">
             <n-select
               v-model:value="addModel.php"
               :options="installedDbAndPhp.php"
-              :placeholder="$t('routes.websiteIndex.create.fields.phpVersion.placeholder')"
+              :placeholder="$t('websiteIndex.create.fields.phpVersion.placeholder')"
               @keydown.enter.prevent
             >
             </n-select>
@@ -568,11 +568,11 @@ onMounted(() => {
         </n-col>
         <n-col :span="2"></n-col>
         <n-col :span="11">
-          <n-form-item path="db" :label="$t('routes.websiteIndex.create.fields.db.label')">
+          <n-form-item path="db" :label="$t('websiteIndex.create.fields.db.label')">
             <n-select
               v-model:value="addModel.db_type"
               :options="installedDbAndPhp.db"
-              :placeholder="$t('routes.websiteIndex.create.fields.db.placeholder')"
+              :placeholder="$t('websiteIndex.create.fields.db.placeholder')"
               @keydown.enter.prevent
               @update:value="
                 () => {
@@ -592,13 +592,13 @@ onMounted(() => {
           <n-form-item
             v-if="addModel.db"
             path="db_name"
-            :label="$t('routes.websiteIndex.create.fields.dbName.label')"
+            :label="$t('websiteIndex.create.fields.dbName.label')"
           >
             <n-input
               v-model:value="addModel.db_name"
               type="text"
               @keydown.enter.prevent
-              :placeholder="$t('routes.websiteIndex.create.fields.dbName.placeholder')"
+              :placeholder="$t('websiteIndex.create.fields.dbName.placeholder')"
             />
           </n-form-item>
         </n-col>
@@ -607,13 +607,13 @@ onMounted(() => {
           <n-form-item
             v-if="addModel.db"
             path="db_user"
-            :label="$t('routes.websiteIndex.create.fields.dbUser.label')"
+            :label="$t('websiteIndex.create.fields.dbUser.label')"
           >
             <n-input
               v-model:value="addModel.db_user"
               type="text"
               @keydown.enter.prevent
-              :placeholder="$t('routes.websiteIndex.create.fields.dbUser.placeholder')"
+              :placeholder="$t('websiteIndex.create.fields.dbUser.placeholder')"
             />
           </n-form-item>
         </n-col>
@@ -622,31 +622,31 @@ onMounted(() => {
           <n-form-item
             v-if="addModel.db"
             path="db_password"
-            :label="$t('routes.websiteIndex.create.fields.dbPassword.label')"
+            :label="$t('websiteIndex.create.fields.dbPassword.label')"
           >
             <n-input
               v-model:value="addModel.db_password"
               type="text"
               @keydown.enter.prevent
-              :placeholder="$t('routes.websiteIndex.create.fields.dbPassword.placeholder')"
+              :placeholder="$t('websiteIndex.create.fields.dbPassword.placeholder')"
             />
           </n-form-item>
         </n-col>
       </n-row>
-      <n-form-item path="path" :label="$t('routes.websiteIndex.create.fields.path.label')">
+      <n-form-item path="path" :label="$t('websiteIndex.create.fields.path.label')">
         <n-input
           v-model:value="addModel.path"
           type="text"
           @keydown.enter.prevent
-          :placeholder="$t('routes.websiteIndex.create.fields.path.placeholder')"
+          :placeholder="$t('websiteIndex.create.fields.path.placeholder')"
         />
       </n-form-item>
-      <n-form-item path="remark" :label="$t('routes.websiteIndex.create.fields.remark.label')">
+      <n-form-item path="remark" :label="$t('websiteIndex.create.fields.remark.label')">
         <n-input
           v-model:value="addModel.remark"
           type="textarea"
           @keydown.enter.prevent
-          :placeholder="$t('routes.websiteIndex.create.fields.remark.placeholder')"
+          :placeholder="$t('websiteIndex.create.fields.remark.placeholder')"
         />
       </n-form-item>
     </n-form>
@@ -659,7 +659,7 @@ onMounted(() => {
           :disabled="buttonDisabled"
           @click="handleAdd"
         >
-          {{ $t('routes.websiteIndex.create.actions.submit') }}
+          {{ $t('websiteIndex.create.actions.submit') }}
         </n-button>
       </n-col>
     </n-row>

@@ -19,17 +19,17 @@ const getVersions = () => {
 
 const handleUpdate = () => {
   window.$dialog.warning({
-    title: t('routes.homeUpdate.confirm.update.title'),
-    content: t('routes.homeUpdate.confirm.update.content'),
-    positiveText: t('routes.homeUpdate.confirm.update.positiveText'),
-    negativeText: t('routes.homeUpdate.confirm.update.negativeText'),
+    title: t('homeUpdate.confirm.update.title'),
+    content: t('homeUpdate.confirm.update.content'),
+    positiveText: t('homeUpdate.confirm.update.positiveText'),
+    negativeText: t('homeUpdate.confirm.update.negativeText'),
     onPositiveClick: () => {
-      messageReactive = window.$message.loading(t('routes.homeUpdate.confirm.update.loading'), {
+      messageReactive = window.$message.loading(t('homeUpdate.confirm.update.loading'), {
         duration: 0
       })
       info.update().then(() => {
         messageReactive?.destroy()
-        window.$message.success(t('routes.homeUpdate.alerts.success'))
+        window.$message.success(t('homeUpdate.alerts.success'))
         setTimeout(() => {
           setTimeout(() => {
             window.location.reload()
@@ -39,7 +39,7 @@ const handleUpdate = () => {
       })
     },
     onNegativeClick: () => {
-      window.$message.info(t('routes.homeUpdate.alerts.info'))
+      window.$message.info(t('homeUpdate.alerts.info'))
     }
   })
 }
@@ -59,7 +59,7 @@ onMounted(() => {
             class="mr-5"
             icon="material-symbols:arrow-circle-up-outline-rounded"
           />
-          {{ $t('routes.homeUpdate.button.update') }}
+          {{ $t('homeUpdate.button.update') }}
         </n-button>
       </div>
     </template>
@@ -75,8 +75,7 @@ onMounted(() => {
       </n-timeline-item>
     </n-timeline>
     <div v-else pt-40>
-      <n-result status="418" title="Loading..." :description="$t('routes.homeUpdate.loading')">
-      </n-result>
+      <n-result status="418" title="Loading..." :description="$t('homeUpdate.loading')"> </n-result>
     </div>
   </CommonPage>
 </template>

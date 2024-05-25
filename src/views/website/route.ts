@@ -15,7 +15,7 @@ export default {
       path: '',
       component: () => import('./IndexView.vue'),
       meta: {
-        title: 'routes.websiteIndex.title',
+        title: 'websiteIndex.title',
         icon: 'mdi:web',
         role: ['admin'],
         requireAuth: true
