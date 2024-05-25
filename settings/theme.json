@@ -20,5 +20,6 @@
     "success": "#18A058",
     "warning": "#F0A020",
     "error": "#D03050"
-  }
+  },
+  "language": "zh_CN"
 }

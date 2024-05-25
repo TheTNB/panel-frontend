@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { kebabCase } from 'lodash-es'
 import { useCssVar } from '@vueuse/core'
-import { zhCN, dateZhCN } from 'naive-ui'
 import type { GlobalThemeOverrides } from 'naive-ui'
 import { useThemeStore } from '@/store'
 
@@ -51,8 +50,8 @@ onBeforeUnmount(() => {
   <n-config-provider
     :theme="themeStore.naiveTheme"
     :theme-overrides="themeStore.naiveThemeOverrides"
-    :locale="zhCN"
-    :date-locale="dateZhCN"
+    :locale="themeStore.naiveLocale"
+    :date-locale="themeStore.naiveDateLocale"
     wh-full
   >
     <slot />

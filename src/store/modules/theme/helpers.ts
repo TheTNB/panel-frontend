@@ -30,7 +30,8 @@ export function initThemeSettings(): Theme.Setting {
     warning: '#faad14',
     error: '#f5222d'
   }
-  return { isMobile, darkMode, sider, header, tab, primaryColor, otherColor }
+  const language = themeSetting.language || 'zh_CN'
+  return { isMobile, darkMode, sider, header, tab, primaryColor, otherColor, language }
 }
 
 /** 获取naive的主题颜色 */

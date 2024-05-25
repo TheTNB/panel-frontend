@@ -1,21 +1,12 @@
 <script setup lang="ts">
-import { useAppStore } from '@/store'
-import { dateZhCN, zhCN, enUS, dateEnUS } from 'naive-ui'
-import type { NLocale, NDateLocale } from 'naive-ui'
+import { useAppStore, useThemeStore } from '@/store'
 
 const appStore = useAppStore()
-
-const localeMap: Record<string, { locale: NLocale; dateLocale: NDateLocale }> = {
-  zh_CN: { locale: zhCN, dateLocale: dateZhCN },
-  en: { locale: enUS, dateLocale: dateEnUS }
-}
+const themeStore = useThemeStore()
 </script>
 
 <template>
-  <n-config-provider
-    :locale="localeMap[$i18n.locale].locale"
-    :date-locale="localeMap[$i18n.locale].dateLocale"
-  >
+  <n-config-provider :locale="themeStore.naiveLocale" :date-locale="themeStore.naiveDateLocale">
     <router-view v-slot="{ Component, route }">
       <component :is="Component" v-if="appStore.reloadFlag" :key="route.path" />
     </router-view>
