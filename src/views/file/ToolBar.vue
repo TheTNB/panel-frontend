@@ -2,12 +2,17 @@
 import { NButton, NSpace } from 'naive-ui'
 import file from '@/api/panel/file'
 import EventBus from '@/utils/event'
-import { checkName } from '@/utils/file'
+import { checkName, lastDirectory } from '@/utils/file'
+import UploadModal from '@/views/file/UploadModal.vue'
+import type { Marked } from '@/views/file/types'
 
 const path = defineModel<string>('path', { type: String, required: true })
-const selected = defineModel<any[]>('selected', { type: Array, default: () => [] })
+const selected = defineModel<string[]>('selected', { type: Array, default: () => [] })
+const marked = defineModel<Marked[]>('marked', { type: Array, default: () => [] })
+const archive = defineModel<boolean>('archive', { type: Boolean, required: true })
+const permission = defineModel<boolean>('permission', { type: Boolean, required: true })
 
-const uploadModal = ref(false)
+const upload = ref(false)
 const newModal = ref(false)
 const newModel = ref({
   dir: false,
@@ -32,6 +37,56 @@ const handleNew = () => {
     window.$message.success('创建成功')
     EventBus.emit('file:refresh')
   })
+}
+
+const handleCopy = () => {
+  if (!selected.value.length) {
+    window.$message.error('请选择要复制的文件/文件夹')
+    return
+  }
+  marked.value = selected.value.map((path) => ({
+    name: lastDirectory(path),
+    source: path,
+    type: 'copy'
+  }))
+  window.$message.success('标记成功，请前往目标路径粘贴')
+}
+
+const handleMove = () => {
+  if (!selected.value.length) {
+    window.$message.error('请选择要移动的文件/文件夹')
+    return
+  }
+  marked.value = selected.value.map((path) => ({
+    name: lastDirectory(path),
+    source: path,
+    type: 'move'
+  }))
+  window.$message.success('标记成功，请前往目标路径粘贴')
+}
+
+const handlePaste = async () => {
+  if (!marked.value.length) {
+    window.$message.error('请先标记需要复制或移动的文件/文件夹')
+    return
+  }
+
+  for (const { name, source, type } of marked.value) {
+    const target = path.value + '/' + name
+    if (type === 'copy') {
+      await file.copy(source, target).then(() => {
+        window.$message.success(`复制 ${source} 到 ${target} 成功`)
+        EventBus.emit('file:refresh')
+      })
+    } else {
+      await file.move(source, target).then(() => {
+        window.$message.success(`移动 ${source} 到 ${target} 成功`)
+        EventBus.emit('file:refresh')
+      })
+    }
+  }
+
+  marked.value = []
 }
 
 const bulkDelete = () => {
@@ -60,16 +115,18 @@ const bulkDelete = () => {
     >
       <n-button type="primary"> 新建 </n-button>
     </n-popselect>
-    <n-button @click="uploadModal = true"> 上传 </n-button>
-    <n-button> 远程下载 </n-button>
-    <div ml-auto v-if="selected.length">
+    <n-button @click="upload = true"> 上传 </n-button>
+    <n-button style="display: none"> 远程下载 </n-button>
+    <div ml-auto>
       <n-flex>
-        <n-button secondary type="primary"> 粘贴 </n-button>
-        <n-button-group>
-          <n-button> 复制 </n-button>
-          <n-button> 移动 </n-button>
-          <n-button> 压缩 </n-button>
-          <n-button> 权限 </n-button>
+        <n-button v-if="marked.length" secondary type="primary" @click="handlePaste">
+          粘贴
+        </n-button>
+        <n-button-group v-if="selected.length">
+          <n-button @click="handleCopy"> 复制 </n-button>
+          <n-button @click="handleMove"> 移动 </n-button>
+          <n-button @click="archive = true"> 压缩 </n-button>
+          <n-button @click="permission = true"> 权限 </n-button>
           <n-popconfirm @positive-click="bulkDelete">
             <template #trigger>
               <n-button>删除</n-button>
@@ -98,7 +155,7 @@ const bulkDelete = () => {
       <n-button type="info" block @click="handleNew">提交</n-button>
     </n-space>
   </n-modal>
-  <upload-modal v-model:show="uploadModal" v-model:path="path" />
+  <upload-modal v-model:show="upload" v-model:path="path" />
 </template>
 
 <style scoped lang="scss"></style>

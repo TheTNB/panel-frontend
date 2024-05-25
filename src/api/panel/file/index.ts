@@ -50,11 +50,16 @@ export default {
   info: (path: string): Promise<AxiosResponse<any>> =>
     request.get('/panel/file/info', { params: { path } }),
   // 修改文件权限
-  permission: (path: string, mode: string): Promise<AxiosResponse<any>> =>
-    request.post('/panel/file/permission', { path, mode }),
+  permission: (
+    path: string,
+    mode: string,
+    owner: string,
+    group: string
+  ): Promise<AxiosResponse<any>> =>
+    request.post('/panel/file/permission', { path, mode, owner, group }),
   // 压缩文件
-  archive: (file: string, paths: string[]): Promise<AxiosResponse<any>> =>
-    request.post('/panel/file/archive', { file, paths }),
+  archive: (paths: string[], file: string): Promise<AxiosResponse<any>> =>
+    request.post('/panel/file/archive', { paths, file }),
   // 解压文件
   unArchive: (file: string, path: string): Promise<AxiosResponse<any>> =>
     request.post('/panel/file/unArchive', { file, path }),

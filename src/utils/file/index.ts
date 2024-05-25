@@ -6,6 +6,14 @@ const getExt = (filename: string) => {
   return filename.slice(dot + 1)
 }
 
+const getBase = (filename: string) => {
+  const dot = filename.lastIndexOf('.')
+  if (dot === -1 || dot === 0) {
+    return filename
+  }
+  return filename.slice(0, dot)
+}
+
 const getIconByExt = (ext: string) => {
   switch (ext) {
     case 'png':
@@ -304,8 +312,14 @@ const formatBytes = (size: any) => {
   return size.toFixed(2) + ' ' + units[i]
 }
 
+const lastDirectory = (path: string) => {
+  const parts = path.split('/')
+  return parts.pop() || ''
+}
+
 export {
   getExt,
+  getBase,
   getIconByExt,
   languageByPath,
   checkName,
@@ -313,5 +327,6 @@ export {
   getFilename,
   isArchive,
   formatPercent,
-  formatBytes
+  formatBytes,
+  lastDirectory
 }

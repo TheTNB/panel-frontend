@@ -82,6 +82,10 @@ const handlePushHistory = (path: string) => {
   current = history.length - 1
 }
 
+const handleSearch = () => {
+  window.$message.info('搜索功能暂未实现')
+}
+
 onMounted(() => {
   EventBus.on('push-history', handlePushHistory)
 })
@@ -133,7 +137,7 @@ onUnmounted(() => {
           <n-checkbox> 包含子目录 </n-checkbox>
         </template>
       </n-input>
-      <n-button type="primary">
+      <n-button type="primary" @click="handleSearch">
         <icon-bi-search />
       </n-button>
     </n-input-group>
