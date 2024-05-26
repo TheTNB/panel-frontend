@@ -1,7 +1,7 @@
 import * as NaiveUI from 'naive-ui'
 import { useThemeStore } from '@/store'
 
-export function setupNaiveDiscreteApi() {
+export async function setupNaiveDiscreteApi() {
   const themeStore = useThemeStore()
   const configProviderProps = computed(() => ({
     theme: themeStore.naiveTheme,

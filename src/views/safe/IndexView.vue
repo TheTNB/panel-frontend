@@ -243,7 +243,7 @@ onMounted(() => {
               :unCheckedChildren="$t('safeIndex.filter.fields.ping.unchecked')"
             />
           </n-form-item>
-          <n-form-item :label="$t('safeIndex.filter.fields.ssh.label')">
+          <n-form-item :label="$t('safeIndex.filter.fields.port.label')">
             <n-input-number v-model:value="model.sshPort" @blur="handleSshPort" />
           </n-form-item>
         </n-form>

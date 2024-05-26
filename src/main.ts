@@ -21,8 +21,8 @@ async function setupApp() {
       availableLanguages: { '*': 'zh-cn' }
     }
   })
-  setupStore(app)
-  setupNaiveDiscreteApi()
+  await setupStore(app)
+  await setupNaiveDiscreteApi()
   await setupPanel().then(() => {
     setupI18n(app)
   })
