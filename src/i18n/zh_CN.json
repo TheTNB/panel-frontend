@@ -227,6 +227,10 @@
           "label": "面板名称",
           "placeholder": "耗子 Linux 面板"
         },
+        "language": {
+          "label": "语言",
+          "placeholder": "选择语言"
+        },
         "username": {
           "label": "用户名",
           "placeholder": "admin"

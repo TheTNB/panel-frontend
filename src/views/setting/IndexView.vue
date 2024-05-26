@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import setting from '@/api/panel/setting'
 import { useI18n } from 'vue-i18n'
+import { useThemeStore } from '@/store'
 
 const { t } = useI18n()
+const themeStore = useThemeStore()
 
 const model = ref({
   name: '',
+  language: '',
   username: '',
   password: '',
   email: '',
@@ -16,6 +19,11 @@ const model = ref({
   backup_path: ''
 })
 
+const languages = [
+  { label: '简体中文', value: 'zh_CN' },
+  { label: 'English', value: 'en' }
+]
+
 const getSetting = () => {
   setting.list().then((res) => {
     model.value = res.data
@@ -25,7 +33,16 @@ const getSetting = () => {
 const handleSave = () => {
   setting.update(model.value).then(() => {
     window.$message.success(t('settingIndex.edit.toasts.success'))
+    setTimeout(() => {
+      maybeHardReload()
+    }, 1000)
   })
+}
+
+const maybeHardReload = () => {
+  if (model.value.language !== themeStore.language) {
+    window.location.reload()
+  }
 }
 
 onMounted(() => {
@@ -45,6 +62,9 @@ onMounted(() => {
             v-model:value="model.name"
             :placeholder="$t('settingIndex.edit.fields.name.placeholder')"
           />
+        </n-form-item>
+        <n-form-item :label="$t('settingIndex.edit.fields.language.label')">
+          <n-select v-model:value="model.language" :options="languages"> </n-select>
         </n-form-item>
         <n-form-item :label="$t('settingIndex.edit.fields.username.label')">
           <n-input

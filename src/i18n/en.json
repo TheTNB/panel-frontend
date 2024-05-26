@@ -219,10 +219,17 @@
     "title": "Settings",
     "info": "Update panel settings / SSL / entry, adjust browser address accordingly to access panel!",
     "edit": {
+      "toasts": {
+        "success": "saved successfully"
+      },
       "fields": {
         "name": {
           "label": "Panel name",
           "placeholder": "HaoZi Linux Panel"
+        },
+        "language": {
+          "label": "Language",
+          "placeholder": "Select language"
         },
         "username": {
           "label": "Username",

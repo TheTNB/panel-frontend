@@ -1,11 +1,9 @@
 import { request } from '@/utils'
 import type { AxiosResponse } from 'axios'
-import type { RequestConfig } from '~/types/axios'
 
 export default {
-  // 面板名称
-  name: (): Promise<AxiosResponse<any>> =>
-    request.get('/panel/info/name', { noNeedToken: true } as RequestConfig),
+  // 面板信息
+  panel: (): Promise<Response> => fetch('/api/panel/info/panel'),
   // 面板菜单
   menu: (): Promise<AxiosResponse<any>> => request.get('/panel/info/menu'),
   // 首页插件
